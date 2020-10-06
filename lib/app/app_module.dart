@@ -1,9 +1,14 @@
+import 'package:fazentech/app/modules/account/account_screen.dart';
 import 'package:fazentech/app/modules/auth/signup_address_screen.dart';
 import 'package:fazentech/app/modules/auth/sigup_screen.dart';
-import 'package:fazentech/app/modules/checkout/submodules/credit_card_data/credit_card_data_screen.dart';
-import 'package:fazentech/app/modules/checkout/submodules/order_confirmation/order_confirmation_screen.dart';
-import 'package:fazentech/app/modules/checkout/submodules/payment_method/payment_method_screen.dart';
+import 'package:fazentech/app/modules/cart/cart_screen.dart';
+import 'package:fazentech/app/modules/checkout/screens/credit_card_data/credit_card_data_screen.dart';
+import 'package:fazentech/app/modules/checkout/screens/order_confirmation/order_confirmation_screen.dart';
+import 'package:fazentech/app/modules/checkout/screens/payment_method/payment_method_screen.dart';
 import 'package:fazentech/app/modules/home/home_screen.dart';
+import 'package:fazentech/app/modules/order/screens/order_details/order_details_screen.dart';
+import 'package:fazentech/app/modules/order/screens/order_finish/order_finish_screen.dart';
+import 'package:fazentech/app/modules/order/screens/orders/orders_screen.dart';
 import 'package:fazentech/app/modules/product/submodules/categories/categories_screen.dart';
 import 'package:fazentech/app/modules/product/submodules/product/product_screen.dart';
 import 'package:fazentech/app/modules/product/submodules/products/products_screen.dart';
@@ -21,7 +26,7 @@ class AppModule extends MainModule {
   List<ModularRouter> get routers => [
     //ModularRouter('/', child: (_, __) => HomeScreen()),
     //ModularRouter('/', child: (_, __) => ProductsScreen()),
-    ModularRouter('/', child: (_, __) => PaymentMethodScreen()),
+    //ModularRouter('/', child: (_, __) => PaymentMethodScreen()),
     ModularRouter('/login', child: (_, __) => LoginScreen()),
     ModularRouter('/cadastro', child: (_, __) => SignUpScreen()),
     ModularRouter('/cadastro/endereco', child: (_, __) => SignUpAddressScreen()),
@@ -33,7 +38,12 @@ class AppModule extends MainModule {
       price: 5.49,
     )),
     ModularRouter('/checkout/credit-card', child: (_, __) => CreditCardDataScreen()),
-    ModularRouter('/checkout/confirmation', child: (_, __) => OrderConfirmationScreen())
+    ModularRouter('/checkout/confirmation', child: (_, __) => OrderConfirmationScreen()),
+    //ModularRouter('/', child: (_, __) => AccountScreen()),
+    //ModularRouter('/', child: (_, __) => OrdersScreen()),
+    //ModularRouter('/', child: (_, __) => OrderDetailsScreen()),
+    //ModularRouter('/', child: (_, __) => OrderFinishScreen()),
+    ModularRouter('/', child: (_, __) => CartScreen())
   ];
 
   @override

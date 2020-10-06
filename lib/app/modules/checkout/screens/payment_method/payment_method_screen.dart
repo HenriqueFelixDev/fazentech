@@ -1,4 +1,4 @@
-import 'package:fazentech/app/modules/checkout/submodules/payment_method/components/payment_method_card.dart';
+import 'components/payment_method_card.dart';
 import 'package:fazentech/app/shared/components/custom_app_bar_widget.dart';
 import 'package:fazentech/app/shared/theme/text_styles.dart';
 import 'package:flutter/material.dart';
