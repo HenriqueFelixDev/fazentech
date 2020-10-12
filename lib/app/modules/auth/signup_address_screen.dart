@@ -14,7 +14,7 @@ class _SignUpAddressScreenState extends State<SignUpAddressScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBarWidget(
-        title: Text('Endereço', style: TextStylesSet.appBarTitleStyle),
+        titleText: 'Endereço',
         actions: [
           IconButton(
             icon: Icon(Icons.check),

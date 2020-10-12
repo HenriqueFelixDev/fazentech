@@ -20,27 +20,42 @@ class ProductCard extends StatelessWidget {
   }) : super(key: key);
   
   List<Widget> _getProductInfo(BuildContext context) {
+    final theme = Theme.of(context);
     return [
-      Text('R\$ ${price.toStringAsFixed(2)}', style: Theme.of(context).textTheme.headline4.copyWith(color: Theme.of(context).primaryColor, fontWeight: FontWeight.bold)),
+      Text(
+        'R\$ ${price.toStringAsFixed(2)}', 
+        style: theme.textTheme.headline2.copyWith(
+          color: theme.primaryColor, 
+          fontWeight: FontWeight.bold
+        )
+      ),
       IconButton(
-        icon: Icon(Icons.add_shopping_cart, color: ColorsSet.accentColor),
+        icon: Icon(
+          Icons.add_shopping_cart, 
+          color: ColorsSet.accentColor,
+          size: 26.0
+        ),
         onPressed: onCartPressed,
       )
     ];
   }
 
+  Widget _getProductTitle(BuildContext context) {
+    return Text(title, style: Theme.of(context).textTheme.headline3);
+  }
+
   Widget _verticalCard(BuildContext context) {
     return Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Image.network(image, fit: BoxFit.cover),
-                Text(title, style: Theme.of(context).textTheme.headline6),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: _getProductInfo(context),
-                )
-              ],
-            );
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Image.network(image, fit: BoxFit.cover),
+        _getProductTitle(context),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: _getProductInfo(context),
+        )
+      ],
+    );
   }
   
   Widget _horizontalCard(BuildContext context) {
@@ -59,7 +74,7 @@ class ProductCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(title, style: Theme.of(context).textTheme.headline6),
+                  _getProductTitle(context),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: _getProductInfo(context),

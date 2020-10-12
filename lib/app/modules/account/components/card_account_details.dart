@@ -40,7 +40,7 @@ class CardAccountDetails extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(title, style: textTheme.headline6.copyWith(fontWeight: FontWeight.bold)),
+              Text(title, style: textTheme.headline3),
               SizedBox(width: 4.0),
               RaisedButton.icon(
                 shape: StadiumBorder(),

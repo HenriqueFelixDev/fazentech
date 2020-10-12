@@ -3,6 +3,7 @@ import 'package:fazentech/app/modules/cart/components/cart_list_tile_widget.dart
 import 'package:fazentech/app/shared/components/custom_app_bar_widget.dart';
 import 'package:fazentech/app/shared/components/radio_button_widget.dart';
 import 'package:fazentech/app/shared/components/result_details_item.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 
 class CartScreen extends StatefulWidget {
   @override
@@ -33,10 +34,10 @@ class _CartScreenState extends State<CartScreen> {
         ),
         Container(
           child: Wrap(
-            alignment: WrapAlignment.spaceEvenly,
+            alignment: WrapAlignment.start,
             children: [
               RadioButtonWidget(
-                label: 'PAC (R\$ 5,99)', 
+                label: 'PAC (R\$ 5,99)',
                 value: null, 
                 groupValue: null, 
                 onChanged: (value){}
@@ -58,11 +59,11 @@ class _CartScreenState extends State<CartScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBarWidget(
-        title: Text('Carrinho', style: TextStyle(color: Colors.black))
+        titleText: 'Carrinho'
       ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.check, size: 28.0, color: Colors.white),
-        onPressed: (){},
+        onPressed: () => Modular.to.pushNamed('/checkout/methods'),
       ),
       body: ListView(
         padding: const EdgeInsets.all(24.0),

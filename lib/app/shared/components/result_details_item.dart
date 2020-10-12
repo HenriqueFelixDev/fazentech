@@ -26,7 +26,7 @@ class ResultDetailsItem extends StatelessWidget {
               ),
             )
           ),
-          Text(value, style: Theme.of(context).textTheme.headline6.copyWith(fontWeight: FontWeight.bold))
+          Text(value, style: Theme.of(context).textTheme.headline5)
         ],
       ),
     );

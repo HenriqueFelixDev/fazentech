@@ -2,14 +2,16 @@ import 'package:fazentech/app/shared/theme/text_styles.dart';
 import 'package:flutter/material.dart';
 
 class CustomAppBarWidget extends AppBar {
-  final Widget title;
+  final String titleText;
+  final Widget titleWidget;
   final List<Widget> actions;
 
   CustomAppBarWidget({
-    this.title,
+    this.titleText,
+    this.titleWidget,
     this.actions
   }) : super(
-    title: title,
+    title: titleWidget ?? Text(titleText ?? '', style: TextStylesSet.appBarTitleStyle),
     iconTheme: IconThemeData(color: Colors.black),
     centerTitle: true,
     elevation: 0.0,

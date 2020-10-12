@@ -40,11 +40,11 @@ class _ProductScreenState extends State<ProductScreen> {
               child: Image.network(widget.image, fit: BoxFit.cover)
             ),
             SizedBox(height: 8.0),
-            Text(widget.title, style: textTheme.headline5),
-            Text('R\$ ${widget.price.toStringAsFixed(2)}', style: textTheme.headline4.copyWith(fontWeight: FontWeight.bold, color: Theme.of(context).primaryColor),),
+            Text(widget.title, style: textTheme.headline2),
+            Text('R\$ ${widget.price.toStringAsFixed(2)}', style: textTheme.headline1.copyWith(color: Theme.of(context).primaryColor)),
             SizedBox(height: 16.0),
-            Text('Descrição', style: TextStyle(color: Colors.grey[500], fontSize: 16.0)),
-            Text(widget.description, style: TextStyle(fontSize: 18.0)),
+            Text('Descrição', style: textTheme.headline4),
+            Text(widget.description, style: textTheme.bodyText1),
           ],
         ),
       )

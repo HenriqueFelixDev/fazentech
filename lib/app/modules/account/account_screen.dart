@@ -7,11 +7,8 @@ class AccountScreen extends StatefulWidget {
   _AccountScreenState createState() => _AccountScreenState();
 }
 
-Widget _cardAccountDetails(BuildContext context, String title, Map<String, String> accountData) {
-  
-}
-
 class _AccountScreenState extends State<AccountScreen> {
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,7 +17,7 @@ class _AccountScreenState extends State<AccountScreen> {
           AccountHeaderWidget(
             name: 'João da Silva', 
             email: 'joaosilva@mail.com', 
-            profileImage: NetworkImage('https://static.thenounproject.com/png/2684601-200.png')
+            profileImage: NetworkImage('https://cdn1.iconfinder.com/data/icons/avatar-97/32/avatar-02-512.png')
           ),
           CardAccountDetails(
             onEditPressed: (){},

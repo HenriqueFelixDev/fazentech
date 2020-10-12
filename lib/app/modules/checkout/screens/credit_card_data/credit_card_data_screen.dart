@@ -10,7 +10,7 @@ class CreditCardDataScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBarWidget(
-        title: Text('Dados do Cartão', style: TextStylesSet.appBarTitleStyle)
+        titleText: 'Dados do Cartão'
       ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.check, size: 24.0, color: Colors.white),

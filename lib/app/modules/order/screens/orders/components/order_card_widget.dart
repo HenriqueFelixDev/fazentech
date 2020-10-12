@@ -30,15 +30,17 @@ class OrderCardWidget extends StatelessWidget {
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('#$orderId', style: textTheme.headline5.copyWith(fontWeight: FontWeight.bold)),
+              Text('#$orderId', style: textTheme.headline3),
               SizedBox(width: 8.0),
               Icon(Icons.date_range, color: Colors.black54),
-              Text(orderDate.toString(), style: textTheme.headline6.copyWith(color: Colors.black54)),
+              Expanded(
+                child: Text(orderDate.toString(), style: textTheme.headline5.copyWith(color: Colors.black54))
+              ),
               Expanded(
                 child: Text(
                   orderStatus, 
                   textAlign: TextAlign.end, 
-                  style: textTheme.headline6.copyWith(color: _mainColor)
+                  style: textTheme.headline5.copyWith(color: _mainColor)
                 ),
               )
             ]
@@ -47,14 +49,14 @@ class OrderCardWidget extends StatelessWidget {
             children: [
               Text(
                 'R\$ ${orderPrice.toStringAsFixed(2)}', 
-                style: textTheme.headline4.copyWith(fontWeight: FontWeight.bold, color: _mainColor)
+                style: textTheme.headline2.copyWith(color: _mainColor)
               ),
               Expanded(
                 child: Container(
                   alignment: Alignment.centerRight,
                   child: FlatButton(
                     padding: const EdgeInsets.all(8.0),
-                    child: Text('Ver detalhes', style: textTheme.headline6.copyWith(color: ColorsSet.accentColor)),
+                    child: Text('Ver detalhes', style: textTheme.headline4.copyWith(color: ColorsSet.accentColor)),
                     onPressed: (){},
                   )
                 )

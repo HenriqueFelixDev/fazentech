@@ -14,7 +14,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBarWidget(
-        title: Text('Nova Conta', style: TextStylesSet.appBarTitleStyle),
+        titleText: 'Nova Conta',
         actions: [
           IconButton(
             icon: Icon(Icons.check),

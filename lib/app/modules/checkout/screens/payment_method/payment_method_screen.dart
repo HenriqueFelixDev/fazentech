@@ -18,7 +18,7 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBarWidget(
-        title: Text('Forma de Pagamento', style: TextStylesSet.appBarTitleStyle)
+        titleText: 'Forma de Pagamento'
       ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.check, size: 24.0, color: Colors.white),

@@ -16,17 +16,20 @@ class CategoryTileWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final primaryColor = Theme.of(context).primaryColor;
 
-    return InkWell(
-      onTap: onPressed,
-      child: Card(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Icon(icon, size: 70.0, color: primaryColor),
-            Text(category, style: TextStyle(fontSize: 24.0, color: primaryColor))
-          ]
-        )
-      )
+    return Card(
+      child: Material(
+        borderRadius: BorderRadius.circular(10.0),
+        child: InkWell(
+          onTap: onPressed,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(icon, size: 60.0, color: primaryColor),
+              Text(category, style: TextStyle(fontSize: 22.0, color: primaryColor))
+            ]
+          )
+        ),
+      ),
     );
   }
 }

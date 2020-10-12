@@ -2,6 +2,7 @@ import 'package:fazentech/app/shared/components/custom_app_bar_widget.dart';
 import 'package:fazentech/app/shared/components/product_card.dart';
 import 'package:fazentech/app/shared/theme/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 
 class ProductsScreen extends StatefulWidget {
   @override
@@ -35,14 +36,14 @@ class _ProductsScreenState extends State<ProductsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBarWidget(
-        title: Container(
+        titleWidget: Container(
           height: 40.0,
           child: _searchField(),
         ),
         actions: [
           IconButton(
-            icon: Icon(Icons.filter),
-            onPressed: (){},
+            icon: Icon(Icons.filter_list_rounded),
+            onPressed: () => _showFilterAlert(context)
           )
         ]
       ),
@@ -68,6 +69,92 @@ class _ProductsScreenState extends State<ProductsScreen> {
           );
         },
       )
+    );
+  }
+
+  Widget _priceFormField(String hintText) {
+    return TextFormField(
+      keyboardType: TextInputType.number,
+      decoration: InputDecoration(
+        hintText: hintText,
+        prefix: Container(
+          margin: const EdgeInsets.only(right: 8.0),
+          child: Text('R\$')
+        ),
+        border: OutlineInputBorder()
+      ),
+    );
+  }
+
+  _showFilterAlert(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          actions: [
+            FlatButton(
+              child: Text('Cancelar'),
+              onPressed: () => Modular.to.pop()
+            ),
+            FlatButton(
+              child: Text('Aplicar'),
+              onPressed: (){},
+            ),
+          ],
+          content: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Text('Categorias'),
+                Wrap(
+                  spacing: 8.0,
+                  children: [
+                    FilterChip(
+                      selected: true,
+                      selectedColor: Theme.of(context).primaryColor.withAlpha(150),
+                      label: Text('Verduras'),
+                      onSelected: (selected){},
+                    ),
+                    FilterChip(
+                      label: Text('Verduras'),
+                      onSelected: (selected){},
+                    ),
+                    FilterChip(
+                      label: Text('Verduras'),
+                      onSelected: (selected){},
+                    ),
+                    FilterChip(
+                      label: Text('Verduras'),
+                      onSelected: (selected){},
+                    ),
+                    FilterChip(
+                      label: Text('Verduras'),
+                      onSelected: (selected){},
+                    ),
+                    FilterChip(
+                      label: Text('Verduras'),
+                      onSelected: (selected){},
+                    ),
+                  ],
+                ),
+                SizedBox(height: 16.0),
+                Text('Preço'),
+                Row(
+                  children: [
+                    Expanded(
+                      child: _priceFormField('Mín')
+                    ),
+                    SizedBox(width: 8.0),
+                    Expanded(
+                      child: _priceFormField('Max')
+                    ),
+                  ],
+                )
+              ],
+            )
+          )
+        );
+      }
     );
   }
 }

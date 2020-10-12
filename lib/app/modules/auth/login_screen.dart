@@ -81,38 +81,6 @@ class _LoginScreenState extends State<LoginScreen> {
                             ],
                           ),
                     )
-                    /*Container(
-                      height: MediaQuery.of(context).size.height * 0.3,
-                      child: ClipPath(
-                        clipper: BottomLoginClipper(startPoint: 0.2),
-                        child: Container(
-                          padding: const EdgeInsets.only(bottom: 32.0),
-                          alignment: Alignment.bottomCenter,
-                          decoration: BoxDecoration(
-                            gradient: LinearGradient(
-                              begin: Alignment.bottomCenter,
-                              end: Alignment.topCenter,
-                              stops: [0.58, 0.99],
-                              colors: [
-                                Theme.of(context).primaryColor,
-                                Theme.of(context).primaryColor.withAlpha(100),
-                              ]
-                            )
-                          ),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Text('Não possui cadastro?', style: TextStyle(fontSize: 18.0, color: Colors.white)),
-                              GestureDetector(
-                                onTap: () => Navigator.of(context).pushNamed('/cadastro'),
-                                child: Text('Criar nova conta', style: TextStyle(fontSize: 20.0, color: Theme.of(context).accentColor))
-                              )
-
-                            ],
-                          ),
-                        )
-                      )
-                    )*/
                   ]
                 ),
           ),

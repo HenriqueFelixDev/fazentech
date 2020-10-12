@@ -52,8 +52,14 @@ class AccountHeaderWidget extends StatelessWidget {
               child: _takePhotoButton()
             ),
             SizedBox(height: 8.0),
-            Text(name, style: textTheme.headline5.copyWith(fontWeight: FontWeight.bold)),
-            Text(email)
+            Text(name, style: textTheme.headline2),
+            Text(email, style: TextStyle(color: Colors.white, shadows: [
+              Shadow(
+                color: Colors.black,
+                offset: Offset(2.0, 2.0),
+                blurRadius: 10.0
+              )
+            ]),)
           ],
         )
       )

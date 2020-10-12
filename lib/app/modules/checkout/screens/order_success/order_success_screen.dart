@@ -1,13 +1,14 @@
 import 'package:fazentech/app/shared/components/custom_app_bar_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-class OrderConfirmationScreen extends StatefulWidget {
+class OrderSuccessScreen extends StatefulWidget {
   @override
-  _OrderConfirmationScreenState createState() => _OrderConfirmationScreenState();
+  _OrderSuccessScreenState createState() => _OrderSuccessScreenState();
 }
 
-class _OrderConfirmationScreenState extends State<OrderConfirmationScreen> {
+class _OrderSuccessScreenState extends State<OrderSuccessScreen> {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
@@ -25,19 +26,19 @@ class _OrderConfirmationScreenState extends State<OrderConfirmationScreen> {
                   child: Text(
                     'Pedido realizado com sucesso!',
                     textAlign: TextAlign.center, 
-                    style: textTheme.headline5.copyWith(fontWeight: FontWeight.bold)
+                    style: textTheme.headline2
                   )
                 ),
                 SvgPicture.asset('assets/img/checkout-confirmation.svg', height: 200.0, fit: BoxFit.contain),
                 Text(
                   'Seu pedido está sendo preparado para ser enviado. Após a preparação ele será enviado, portanto, fique atento à situação deste pedido na página de pedidos.',
                   textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 18.0)
+                  style: textTheme.bodyText1
                 ),
                 SizedBox(height: 16.0),
                 FlatButton(
                   child: Text('OK', style: TextStyle(fontSize: 22.0, color: Theme.of(context).accentColor)),
-                  onPressed: (){},
+                  onPressed: () => Modular.to.popUntil(ModalRoute.withName('/')),
                 )
               ],
             ),

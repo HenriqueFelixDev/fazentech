@@ -12,12 +12,12 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
 
-    final titleTheme = textTheme.headline6.copyWith(color: Colors.grey);
+    final titleTheme = textTheme.headline4.copyWith(color: Colors.grey);
     bool productsTileOpen = false;
 
     return Scaffold(
       appBar: CustomAppBarWidget(
-        title: Text('Pedido #16512', style: TextStyle(color: Colors.black))
+        titleText: 'Pedido #16512'
       ),
       body: ListView(
         padding: const EdgeInsets.all(24.0),
@@ -31,7 +31,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                   children: [
                     Text('Forma de Pagamento', textAlign: TextAlign.center, style: titleTheme),
                     SizedBox(height: 8.0),
-                    Text('Cartão de Crédito')
+                    Text('Cartão de Crédito', textAlign: TextAlign.center, style: textTheme.bodyText1.copyWith(height: 1.0))
                   ]
                 ),
               ),
@@ -40,7 +40,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                 children: [
                   Text('Parcelas', style: titleTheme),
                   SizedBox(height: 8.0),
-                  Text('3')
+                  Text('3', style: textTheme.bodyText1.copyWith(height: 1.0))
                 ]
                 )
               ),
@@ -70,12 +70,12 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
               title: Stack(
                 children: [
                   Positioned(
-                    child: Text('Total', style: textTheme.headline6.copyWith(color: Colors.grey)),
+                    child: Text('Total', style: textTheme.headline4),
                   ),
                   AnimatedPositioned(
                     duration: Duration(milliseconds: 300),
                     left: productsTileOpen ? 0.0 : 60.0,
-                    child: Text('R\$ 21.99', style: textTheme.headline5.copyWith(fontWeight: FontWeight.bold)),
+                    child: Text('R\$ 21.99', style: textTheme.headline3),
                   )
                 ],
               ),

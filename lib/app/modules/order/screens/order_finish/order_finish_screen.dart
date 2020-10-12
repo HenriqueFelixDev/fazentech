@@ -3,6 +3,7 @@ import 'package:fazentech/app/shared/components/custom_app_bar_widget.dart';
 import 'package:fazentech/app/shared/components/custom_card_widget.dart';
 import 'package:fazentech/app/shared/components/result_details_item.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 
 class OrderFinishScreen extends StatefulWidget {
   @override
@@ -20,8 +21,10 @@ class _OrderFinishScreenState extends State<OrderFinishScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(billingInfoLabel),
-                Text(billingInfoItems[billingInfoLabel], style: Theme.of(context).textTheme.headline6.copyWith(fontWeight: FontWeight.bold)),
+                Expanded(
+                  child: Text(billingInfoLabel)
+                ),
+                Text(billingInfoItems[billingInfoLabel], style: Theme.of(context).textTheme.headline4)
               ],
             )
         ).toList()
@@ -33,11 +36,11 @@ class _OrderFinishScreenState extends State<OrderFinishScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBarWidget(
-        title: Text('Finalizar Pedido', style: TextStyle(color: Colors.black))
+        titleText: 'Finalizar Pedido'
       ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.check, color: Colors.white, size: 28.0),
-        onPressed: (){},
+        onPressed: () => Modular.to.pushNamed('/checkout/success')
       ),
       body: ListView(
         padding: const EdgeInsets.all(24.0),

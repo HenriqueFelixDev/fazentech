@@ -30,11 +30,11 @@ class ProductOrderListTile extends StatelessWidget {
       subtitle: RichText(
         text: TextSpan(
           text: '${productsCount}x ',
-          style: textTheme.headline6,
+          style: textTheme.headline4,
           children: [
             TextSpan(
               text: 'R\$ $totalPrice',
-              style: textTheme.headline5.copyWith(fontWeight: FontWeight.bold, color: primaryColor)
+              style: textTheme.headline3.copyWith(color: primaryColor)
             )
           ]
         )

@@ -37,7 +37,7 @@ class PaymentMethodCard extends StatelessWidget {
                   child: Text(
                     text, 
                     maxLines: 3,
-                    style: textTheme.headline6.copyWith(fontSize: 16.0), 
+                    style: textTheme.headline4, 
                     overflow: TextOverflow.ellipsis
                   )
                 ),

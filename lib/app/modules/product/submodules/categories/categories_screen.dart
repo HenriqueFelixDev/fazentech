@@ -13,9 +13,10 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBarWidget(
-        title: Text('Categorias', style: TextStylesSet.appBarTitleStyle)
+        titleText: 'Categorias'
       ),
       body: GridView(
+        padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 8.0),
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
           crossAxisSpacing: 16.0,
