@@ -9,6 +9,7 @@ import 'package:fazentech/app/modules/order/screens/order_details/order_details_
 import 'package:fazentech/app/modules/order/screens/order_finish/order_finish_screen.dart';
 import 'package:fazentech/app/modules/order/screens/orders/orders_screen.dart';
 import 'package:fazentech/app/modules/product/submodules/product/product_screen.dart';
+import 'package:fazentech/app/modules/splash/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
@@ -21,7 +22,8 @@ class AppModule extends MainModule {
 
   @override
   List<ModularRouter> get routers => [
-    ModularRouter('/', child: (_, __) => MainScreen()),
+    ModularRouter('/', child: (_, __) => SplashScreen()),
+    ModularRouter('/main', child: (_, __) => MainScreen()),
     ModularRouter('/login', child: (_, __) => LoginScreen()),
     ModularRouter('/cadastro', child: (_, __) => SignUpScreen()),
     ModularRouter('/cadastro/endereco', child: (_, __) => SignUpAddressScreen()),
