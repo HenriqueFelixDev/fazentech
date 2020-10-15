@@ -1,12 +1,12 @@
 import 'package:fazentech/app/shared/models/user/address_state.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-State createNullState() {
-  return State.valueOf(null);
+AddressState createNullState() {
+  return AddressState.valueOf(null);
 }
 
-State createState() {
-  return State.valueOf('MG');
+AddressState createState() {
+  return AddressState.valueOf('MG');
 }
 
 void main() {
