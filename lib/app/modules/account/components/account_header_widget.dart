@@ -1,30 +1,89 @@
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 class AccountHeaderWidget extends StatelessWidget {
+
   final ImageProvider profileImage;
   final String name;
   final String email;
+  final Function(ImageSource) onChangeProfilePhotoPressed;
   AccountHeaderWidget({
     Key key,
     @required this.name,
     @required this.email,
-    @required this.profileImage
+    @required this.profileImage,
+    @required this.onChangeProfilePhotoPressed
   }) : super(key: key);
 
-  Widget _takePhotoButton() {
+  Widget _takePhotoButton(BuildContext context) {
     return Container(
       alignment: Alignment.bottomRight,
       child: Material(
         shape: StadiumBorder(),
         color: Colors.black87,
         child: InkWell(
-          onTap: (){},
+          onTap: () => _showImagePickerSourceOptions(context),
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Icon(Icons.add_a_photo, size: 28.0, color: Colors.white)
           )
         ),
       ),
+    );
+  }
+
+  Widget _bottomSheetOption(BuildContext context, IconData icon, ImageSource source) {
+    return Material(
+      color: Theme.of(context).primaryColor,
+      elevation: 8.0,
+      borderRadius: BorderRadius.circular(10.0),
+      child: InkWell(
+        onTap: () => onChangeProfilePhotoPressed(source),
+        child: Container(
+          padding: const EdgeInsets.all(16.0),
+          child: Icon(icon, color: Colors.white, size: 32.0)
+        ),
+      ),
+    );
+  }
+
+  void _showImagePickerSourceOptions(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      builder: (context) {
+        return BottomSheet(
+          onClosing: (){},
+          enableDrag: false,
+          builder: (_) {
+            return Container(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Text('Origem da imagem', style: Theme.of(context).textTheme.headline3),
+                  SizedBox(height: 16.0),
+                  Wrap(
+                    spacing: 16.0,
+                    children: [
+                      _bottomSheetOption(
+                        context, 
+                        Icons.camera_alt, 
+                        ImageSource.camera
+                      ),
+                      _bottomSheetOption(
+                        context, 
+                        Icons.photo_library, 
+                        ImageSource.gallery
+                      )
+                    ]
+                  )
+                ],
+              )
+            );
+          },
+        );
+      }
     );
   }
 
@@ -49,7 +108,7 @@ class AccountHeaderWidget extends StatelessWidget {
               radius: 60.0,
               backgroundColor: Colors.grey[300],
               backgroundImage: profileImage,
-              child: _takePhotoButton()
+              child: _takePhotoButton(context)
             ),
             SizedBox(height: 8.0),
             Text(name, style: textTheme.headline2),

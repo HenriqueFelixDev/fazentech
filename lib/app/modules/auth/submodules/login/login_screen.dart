@@ -1,5 +1,9 @@
+import 'dart:async';
+
 import 'package:fazentech/app/modules/auth/components/bottom_login_painter.dart';
+import 'package:fazentech/app/modules/auth/submodules/login/login_controller.dart';
 import 'package:fazentech/app/shared/components/form/custom_text_form_field_widget.dart';
+import 'package:fazentech/app/shared/controllers/user_controller.dart';
 import 'package:fazentech/app/shared/theme/assets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -10,10 +14,30 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  final userController = Modular.get<UserController>();
+  final loginController = LoginController();
+
+  StreamSubscription userSubscription;
+  @override
+  void initState() {
+    super.initState();
+    userSubscription = userController.user.listen((user) {
+      if(user != null) {
+        Modular.to.pushReplacementNamed('/main');
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    userSubscription.cancel();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: CustomPaint(
           painter: BottomLoginPainter(
@@ -45,13 +69,13 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                           CustomTextFormField(
                             label: 'E-mail', 
-                            controller: TextEditingController(),
+                            controller: loginController.emailController,
                             keyboardType: TextInputType.emailAddress,
                             obscureText: false
                           ),
                           CustomTextFormField(
                             label: 'Senha', 
-                            controller: TextEditingController(),
+                            controller: loginController.passwordController,
                             obscureText: true
                           ),
                           Container(
@@ -60,7 +84,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               color: Theme.of(context).accentColor,
                               colorBrightness: Brightness.dark,
                               child: Text('Entrar'),
-                              onPressed: () => Modular.to.pushReplacementNamed('/'),
+                              onPressed: _login,
                             ),
                           ),
                         ],
@@ -74,7 +98,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             children: [
                               Text('Não possui cadastro?', style: TextStyle(fontSize: 18.0, color: Colors.white)),
                               GestureDetector(
-                                onTap: () => Navigator.of(context).pushNamed('/cadastro'),
+                                onTap: () => Modular.to.pushNamed('/auth/signup'),
                                 child: Text('Criar nova conta', style: TextStyle(fontSize: 20.0, color: Theme.of(context).accentColor))
                               )
 
@@ -87,5 +111,9 @@ class _LoginScreenState extends State<LoginScreen> {
         )
       )
     );
+  }
+
+  Future<void> _login() async{
+    await loginController.loginWithEmailAndPassword();
   }
 }

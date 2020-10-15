@@ -1,10 +1,10 @@
 
 import 'package:fazentech/app/shared/models/user/phone.dart';
-import 'package:fazentech/app/shared/models/user/user.dart';
+import 'package:fazentech/app/shared/models/user/user_model.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-User createNullUser() {
-  return User(
+UserModel createNullUser() {
+  return UserModel(
     id: null,
     name: null,
     email: null,
@@ -17,8 +17,8 @@ User createNullUser() {
   );
 }
 
-User createUser() {
-  return User(
+UserModel createUser() {
+  return UserModel(
     id: 'a51d',
     name: 'João',
     email: 'joao@mail.com',
@@ -36,7 +36,7 @@ void main() {
     test('Construtor recebendo parâmetros null', () {
       final user = createNullUser();
 
-      expect(user, isA<User>());
+      expect(user, isA<UserModel>());
       expect(user.id, null);
       expect(user.name, null);
       expect(user.email, null);
@@ -51,15 +51,15 @@ void main() {
 
     group('User.fromMap', () {
       test('User.fromMap retornando corretamente', () {
-        expect(createUser(), isA<User>());
+        expect(createUser(), isA<UserModel>());
       });
 
       test('User.fromMap recebendo null', () {
-        expect(User.fromMap(null), null);
+        expect(UserModel.fromMap(null), null);
       });
 
       test('User.fromJson recebendo null', () {
-        expect(User.fromJson(null), null);
+        expect(UserModel.fromJson(null), null);
       });
     });
   });

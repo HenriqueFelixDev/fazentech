@@ -7,6 +7,9 @@ class CustomTextFormField extends StatelessWidget {
   final String label;
   final bool obscureText;
   final double margin;
+  final FocusNode focusNode;
+  final TextInputAction textInputAction;
+  final Function onEditingComplete;
 
   CustomTextFormField({
     Key key,
@@ -14,7 +17,10 @@ class CustomTextFormField extends StatelessWidget {
     this.keyboardType,
     this.label,
     this.obscureText = false,
-    this.margin = 16.0
+    this.margin = 16.0,
+    this.focusNode,
+    this.textInputAction,
+    this.onEditingComplete
   }) : super(key: key);
 
 
@@ -26,6 +32,9 @@ class CustomTextFormField extends StatelessWidget {
         controller: controller,
         keyboardType: keyboardType,
         obscureText: obscureText,
+        focusNode: focusNode,
+        textInputAction: textInputAction,
+        onEditingComplete: onEditingComplete,
         decoration: InputDecoration(
           labelText: label,
           border: OutlineInputBorder()

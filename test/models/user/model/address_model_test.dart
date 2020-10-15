@@ -1,5 +1,5 @@
 import 'package:fazentech/app/shared/models/user/address.dart';
-import 'package:fazentech/app/shared/models/user/state.dart';
+import 'package:fazentech/app/shared/models/user/address_state.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 Address createNullAddress() {
@@ -21,7 +21,7 @@ Address createAddress() {
     street: 'Rua X',
     number: '40',
     city: 'Belo Horizonte',
-    state: State.valueOf('MG'),
+    state: AddressState.valueOf('MG'),
     postalCode: '36455000',
     district: 'Centro',
     complement: '',

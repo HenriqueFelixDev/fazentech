@@ -3,7 +3,6 @@ import 'package:fazentech/app/modules/home/home_screen.dart';
 import 'package:fazentech/app/modules/product/submodules/categories/categories_screen.dart';
 import 'package:fazentech/app/modules/product/submodules/products/products_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_modular/flutter_modular.dart';
 
 class MainScreen extends StatefulWidget {
   @override
@@ -23,7 +22,6 @@ class _MainScreenState extends State<MainScreen> {
           _page = _pageController.page.round();
         });
     });
-    
   }
 
   @override
