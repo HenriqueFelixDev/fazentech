@@ -1,26 +1,17 @@
 import 'package:fazentech/app/modules/home/components/home_banner_widget.dart';
 import 'package:fazentech/app/modules/home/components/product_home_section.dart';
 import 'package:fazentech/app/shared/components/custom_app_bar_widget.dart';
+import 'package:fazentech/app/shared/components/profile_image_widget.dart';
+import 'package:fazentech/app/shared/controllers/user_controller.dart';
+import 'package:fazentech/app/shared/models/user/user_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:octo_image/octo_image.dart';
 
 enum MenuButtons {
   ACCOUNT, ORDERS, SIGNOUT
 }
 
-_onMenuItemPressed(MenuButtons buttonPressed) {
-  switch(buttonPressed) {
-    case MenuButtons.ACCOUNT:
-      Modular.to.pushNamed('/account');
-      break;
-    case MenuButtons.ORDERS:
-      Modular.to.pushNamed('/orders');
-      break;
-    case MenuButtons.SIGNOUT:
-      Modular.to.pushReplacementNamed('/login');
-      break;
-  }
-}
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -28,35 +19,66 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  final userController = Modular.get<UserController>();
+
+  _onMenuItemPressed(MenuButtons buttonPressed, UserModel user) {
+    switch(buttonPressed) {
+      case MenuButtons.ACCOUNT:
+        Modular.to.pushNamed('/account', arguments: user);
+        break;
+      case MenuButtons.ORDERS:
+        Modular.to.pushNamed('/orders');
+        break;
+      case MenuButtons.SIGNOUT:
+        _signOut();
+        break;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: CustomAppBarWidget(
-        titleText: 'FazenTech',
-        actions: [
-          _avatarMenu()
-        ]
-      ),
-      body: Container(
-        child: ListView(
-          padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 24.0),
-          children: [
-            HomeBannerWidget(),
-            SizedBox(height: 16.0),
-            ProductHomeSection(),
-            ProductHomeSection(),
-            ProductHomeSection(),
-          ],
-        )
-      )
+    return StreamBuilder<UserModel>(
+      stream: userController.user,
+      builder: (context, snapshot) {
+        if(snapshot.connectionState == ConnectionState.waiting || snapshot.connectionState == ConnectionState.none) {
+          return Center(child: CircularProgressIndicator());
+        }
+
+        final user = snapshot.data;
+
+        return Scaffold(
+          appBar: CustomAppBarWidget(
+            titleText: 'FazenTech',
+            actions: [
+              if(user != null) _avatarMenu(user)
+              else _signInButton()
+            ]
+          ),
+          body: Container(
+            child: ListView(
+              padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 24.0),
+              children: [
+                HomeBannerWidget(),
+                SizedBox(height: 16.0),
+                ProductHomeSection(),
+                ProductHomeSection(),
+                ProductHomeSection(),
+              ],
+            )
+          )
+        );
+      }
     );
   }
 
-  Widget _avatarMenu() {
+  Widget _avatarMenu(UserModel user) {
     return PopupMenuButton<MenuButtons>(
-      onSelected: _onMenuItemPressed,
+      onSelected: (selectedItem) => _onMenuItemPressed(selectedItem, user),
       offset: Offset(0, 50.0),
-      icon: Image.network('https://cdn1.iconfinder.com/data/icons/avatar-97/32/avatar-02-512.png', fit: BoxFit.cover),
+      icon: ProfileImageWidget(
+        profileImage: user.photo,
+        size: 30.0,
+      ),
       itemBuilder: (context) {
         return <PopupMenuEntry<MenuButtons>>[
           PopupMenuItem(
@@ -90,5 +112,17 @@ class _HomeScreenState extends State<HomeScreen> {
         ];
       },
     );
+  }
+
+  Widget _signInButton() {
+    return FlatButton(
+      child: Text('Fazer Login', style: TextStyle(color: Theme.of(context).accentColor)),
+      onPressed: _signOut
+    );
+  }
+
+  Future<void> _signOut() async{
+    await userController.signOut();
+    Modular.to.pushReplacementNamed('/auth');
   }
 }

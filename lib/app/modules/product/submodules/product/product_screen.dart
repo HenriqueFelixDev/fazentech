@@ -1,18 +1,12 @@
 import 'package:fazentech/app/shared/components/custom_app_bar_widget.dart';
+import 'package:fazentech/app/shared/models/product/product.dart';
 import 'package:flutter/material.dart';
 
 class ProductScreen extends StatefulWidget {
-  final String image;
-  final String title;
-  final double price;
-  final String description;
-
+  final Product product;
   ProductScreen({
     Key key,
-    @required this.image,
-    @required this.title,
-    @required this.price,
-    @required this.description
+    @required this.product,
   }) : super(key: key);
 
   @override
@@ -37,14 +31,14 @@ class _ProductScreenState extends State<ProductScreen> {
           children: [
             AspectRatio(
               aspectRatio: 1.3,
-              child: Image.network(widget.image, fit: BoxFit.cover)
+              child: Image.network(widget.product.images[0], fit: BoxFit.cover)
             ),
             SizedBox(height: 8.0),
-            Text(widget.title, style: textTheme.headline2),
-            Text('R\$ ${widget.price.toStringAsFixed(2)}', style: textTheme.headline1.copyWith(color: Theme.of(context).primaryColor)),
+            Text(widget.product.name, style: textTheme.headline2),
+            Text('R\$ ${widget.product.price.toStringAsFixed(2)}', style: textTheme.headline1.copyWith(color: Theme.of(context).primaryColor)),
             SizedBox(height: 16.0),
             Text('Descrição', style: textTheme.headline4),
-            Text(widget.description, style: textTheme.bodyText1),
+            Text(widget.product.description, style: textTheme.bodyText1),
           ],
         ),
       )

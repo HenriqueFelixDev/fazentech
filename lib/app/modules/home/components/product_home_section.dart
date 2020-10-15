@@ -1,4 +1,5 @@
 import 'package:fazentech/app/shared/components/product_card.dart';
+import 'package:fazentech/app/shared/models/product/product.dart';
 import 'package:fazentech/app/shared/theme/colors.dart';
 import 'package:flutter/material.dart';
 
@@ -37,9 +38,13 @@ class ProductHomeSection extends StatelessWidget {
               scrollDirection: Axis.horizontal,
               itemBuilder: (_, index) {
                 return ProductCard(
-                  image: 'https://picsum.photos/id/$index/300/200', 
-                  title: 'Abacaxi Pérola Unidade', 
-                  price: 5.49, 
+                  product: Product(
+                    id: 'K265JSDFS58165S',
+                    name: 'Abacaxi Pérola Unidade',
+                    images: ['https://picsum.photos/id/$index/300/200'],
+                    description: 'Descrição do produto',
+                    price: 5.99
+                  ),
                   onCartPressed: (){},
                   onTap: (){},
                 );

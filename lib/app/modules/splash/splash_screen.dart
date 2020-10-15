@@ -1,3 +1,7 @@
+import 'dart:async';
+
+import 'package:fazentech/app/shared/controllers/user_controller.dart';
+import 'package:fazentech/app/shared/models/user/user_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
@@ -11,6 +15,7 @@ class _SplashScreenState extends State<SplashScreen>
 
   AnimationController _animationController;
   Animation _logoScaleAnimation;
+  UserModel user;
   
   @override
   void initState() {
@@ -25,9 +30,8 @@ class _SplashScreenState extends State<SplashScreen>
       parent: Tween(begin: 0.2, end: 1.0).animate(_animationController)
     );
 
-    _animationController.addListener(() async{
+    _animationController.addListener(() {
       if(_animationController.isCompleted) {
-        await Future.delayed(Duration(seconds: 1));
         Modular.to.pushReplacementNamed('/main');
       }
     });

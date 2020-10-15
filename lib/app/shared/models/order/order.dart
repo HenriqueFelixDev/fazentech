@@ -34,7 +34,7 @@ class Order {
   Map<String, dynamic> toMap() {
     return {
       'id': id,
-      'createdIn': createdIn?.millisecondsSinceEpoch,
+      'createdIn': createdIn?.toString(),
       'products': products?.map((x) => x?.toMap())?.toList(),
       'status': status.name
     };
@@ -45,8 +45,8 @@ class Order {
   
     return Order(
       id: map['id'],
-      createdIn: DateTime.fromMillisecondsSinceEpoch(map['createdIn']),
-      products: List<OrderProduct>.from(map['products']?.map((x) => OrderProduct.fromMap(x))),
+      createdIn: DateTime.tryParse(map['createdIn']),
+      products: List<OrderProduct>.from(map['products']?.map((x) => OrderProduct.fromMap(x)) ?? []),
       status: map['status'] ?? ''
     );
   }

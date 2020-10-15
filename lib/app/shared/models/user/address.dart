@@ -1,13 +1,13 @@
 import 'dart:convert';
 
-import 'state.dart';
+import 'address_state.dart';
 
 class Address {
   String id;
   String street;
   String number;
   String city;
-  State state;
+  AddressState state;
   String postalCode;
   String district;
   String complement;
@@ -28,7 +28,7 @@ class Address {
     String street,
     String number,
     String city,
-    State state,
+    AddressState state,
     String postalCode,
     String district,
     String complement,
@@ -66,7 +66,7 @@ class Address {
       street: map['street'],
       number: map['number'],
       city: map['city'],
-      state: State.valueOf(map['state']),
+      state: AddressState.valueOf(map['state']),
       postalCode: map['postalCode'],
       district: map['district'],
       complement: map['complement'],

@@ -1,4 +1,4 @@
-import 'package:fazentech/app/shared/models/user/state.dart';
+import 'package:fazentech/app/shared/models/user/address_state.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 State createNullState() {
@@ -16,15 +16,15 @@ void main() {
         expect(createNullState(), null);
       });
       test('State.valueOf retornando corretamente', () {
-        expect(createState(), isA<State>());
+        expect(createState(), isA<AddressState>());
       });
 
       test('State.valueOf recebendo valor inexistente', () {
-        expect(() => State.valueOf('AB'), throwsA(isArgumentError));
+        expect(() => AddressState.valueOf('AB'), throwsA(isArgumentError));
       });
 
       test('State.values retornando 27 valores', () {
-        expect(State.values.toList().length, 27);
+        expect(AddressState.values.toList().length, 27);
       });
     });
   });

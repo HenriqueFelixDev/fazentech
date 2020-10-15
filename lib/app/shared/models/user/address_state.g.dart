@@ -1,40 +1,40 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'state.dart';
+part of 'address_state.dart';
 
 // **************************************************************************
 // BuiltValueGenerator
 // **************************************************************************
 
-const State _$ac = const State._('ac');
-const State _$al = const State._('al');
-const State _$ap = const State._('ap');
-const State _$am = const State._('am');
-const State _$ba = const State._('ba');
-const State _$ce = const State._('ce');
-const State _$df = const State._('df');
-const State _$es = const State._('es');
-const State _$go = const State._('go');
-const State _$ma = const State._('ma');
-const State _$mg = const State._('mg');
-const State _$ms = const State._('ms');
-const State _$mt = const State._('mt');
-const State _$pa = const State._('pa');
-const State _$pb = const State._('pb');
-const State _$pe = const State._('pe');
-const State _$pi = const State._('pi');
-const State _$pr = const State._('pr');
-const State _$rj = const State._('rj');
-const State _$rn = const State._('rn');
-const State _$rs = const State._('rs');
-const State _$ro = const State._('ro');
-const State _$rr = const State._('rr');
-const State _$sc = const State._('sc');
-const State _$sp = const State._('sp');
-const State _$se = const State._('se');
-const State _$to = const State._('to');
+const AddressState _$ac = const AddressState._('ac');
+const AddressState _$al = const AddressState._('al');
+const AddressState _$ap = const AddressState._('ap');
+const AddressState _$am = const AddressState._('am');
+const AddressState _$ba = const AddressState._('ba');
+const AddressState _$ce = const AddressState._('ce');
+const AddressState _$df = const AddressState._('df');
+const AddressState _$es = const AddressState._('es');
+const AddressState _$go = const AddressState._('go');
+const AddressState _$ma = const AddressState._('ma');
+const AddressState _$mg = const AddressState._('mg');
+const AddressState _$ms = const AddressState._('ms');
+const AddressState _$mt = const AddressState._('mt');
+const AddressState _$pa = const AddressState._('pa');
+const AddressState _$pb = const AddressState._('pb');
+const AddressState _$pe = const AddressState._('pe');
+const AddressState _$pi = const AddressState._('pi');
+const AddressState _$pr = const AddressState._('pr');
+const AddressState _$rj = const AddressState._('rj');
+const AddressState _$rn = const AddressState._('rn');
+const AddressState _$rs = const AddressState._('rs');
+const AddressState _$ro = const AddressState._('ro');
+const AddressState _$rr = const AddressState._('rr');
+const AddressState _$sc = const AddressState._('sc');
+const AddressState _$sp = const AddressState._('sp');
+const AddressState _$se = const AddressState._('se');
+const AddressState _$to = const AddressState._('to');
 
-State _$valueOf(String name) {
+AddressState _$valueOf(String name) {
   switch (name) {
     case 'ac':
       return _$ac;
@@ -95,7 +95,8 @@ State _$valueOf(String name) {
   }
 }
 
-final BuiltSet<State> _$values = new BuiltSet<State>(const <State>[
+final BuiltSet<AddressState> _$values =
+    new BuiltSet<AddressState>(const <AddressState>[
   _$ac,
   _$al,
   _$ap,

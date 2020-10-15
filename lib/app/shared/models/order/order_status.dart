@@ -13,8 +13,5 @@ class OrderStatus extends EnumClass {
   const OrderStatus._(String name) : super(name);
 
   static BuiltSet<OrderStatus> get values => _$values;
-  static OrderStatus valueOf(String name) =>
-    name == null
-      ? null
-      : _$valueOf(name.toLowerCase());
+  static OrderStatus valueOf(String name) => _$valueOf(name);
 }

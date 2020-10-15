@@ -1,9 +1,11 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:octo_image/octo_image.dart';
 
 class CategoryTileWidget extends StatelessWidget {
 
   final String category;
-  final IconData icon;
+  final String icon;
   final Function onPressed;
 
   CategoryTileWidget({
@@ -24,7 +26,11 @@ class CategoryTileWidget extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(icon, size: 60.0, color: primaryColor),
+              OctoImage(
+                image: CachedNetworkImageProvider(icon),
+                errorBuilder: OctoError.icon(icon: Icons.info, color: Colors.red),
+                placeholderBuilder: OctoPlaceholder.circularProgressIndicator()
+              ),
               Text(category, style: TextStyle(fontSize: 22.0, color: primaryColor))
             ]
           )

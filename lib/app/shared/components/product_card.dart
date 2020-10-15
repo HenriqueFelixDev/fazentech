@@ -1,19 +1,16 @@
+import 'package:fazentech/app/shared/models/product/product.dart';
 import 'package:fazentech/app/shared/theme/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 class ProductCard extends StatelessWidget {
-  final String image;
-  final String title;
-  final double price;
+  final Product product;
   final Function onCartPressed;
   final Function onTap;
   final Axis axis;
   ProductCard({
     Key key,
-    @required this.image,
-    @required this.title,
-    @required this.price,
+    @required this.product,
     @required this.onCartPressed,
     @required this.onTap,
     this.axis = Axis.vertical
@@ -23,7 +20,7 @@ class ProductCard extends StatelessWidget {
     final theme = Theme.of(context);
     return [
       Text(
-        'R\$ ${price.toStringAsFixed(2)}', 
+        'R\$ ${product.price.toStringAsFixed(2)}', 
         style: theme.textTheme.headline2.copyWith(
           color: theme.primaryColor, 
           fontWeight: FontWeight.bold
@@ -41,14 +38,14 @@ class ProductCard extends StatelessWidget {
   }
 
   Widget _getProductTitle(BuildContext context) {
-    return Text(title, style: Theme.of(context).textTheme.headline3);
+    return Text(product.name, style: Theme.of(context).textTheme.headline3);
   }
 
   Widget _verticalCard(BuildContext context) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Image.network(image, fit: BoxFit.cover),
+        Image.network(product.images[0], fit: BoxFit.cover),
         _getProductTitle(context),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -65,7 +62,7 @@ class ProductCard extends StatelessWidget {
         children: [
           AspectRatio(
             aspectRatio: 1,
-            child: Image.network(image, fit: BoxFit.cover),
+            child: Image.network(product.images[0], fit: BoxFit.cover),
           ),
           Expanded(
             child: Container(
@@ -100,7 +97,7 @@ class ProductCard extends StatelessWidget {
       height: 100.0,
       margin: const EdgeInsets.only(right: 4.0),
       child: InkWell(
-        onTap: () => Modular.to.pushNamed('/produtos/1'),
+        onTap: () => Modular.to.pushNamed('/products/${product.id}', arguments: product),
         child: Card(
           child: child
         ),
