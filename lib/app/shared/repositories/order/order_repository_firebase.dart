@@ -1,21 +1,20 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:fazentech/app/shared/adapter/order/document_snapshot_order_product_adapter.dart';
-import 'package:fazentech/app/shared/adapter/product/document_snapshot_product_adapter.dart';
-import 'package:fazentech/app/shared/adapter/order/document_snapshot_order_adapter.dart';
-import 'package:fazentech/app/shared/models/order/order_filter.dart';
-import 'package:fazentech/app/shared/models/order/order.dart';
-import 'package:fazentech/app/shared/models/order/order_product.dart';
-import 'package:fazentech/app/shared/models/order/order_status.dart';
-import 'package:fazentech/app/shared/repositories/order/order_repository_interface.dart';
-import 'package:fazentech/app/shared/repositories/product/product_repository_firebase.dart';
-import 'package:fazentech/app/shared/repositories/product/product_repository_interface.dart';
+
+import 'order_repository_interface.dart';
+import '../product/product_repository_interface.dart';
+import '../../adapter/order/document_snapshot_order_product_adapter.dart';
+import '../../adapter/order/document_snapshot_order_adapter.dart';
+import '../../models/order/order_filter.dart';
+import '../../models/order/order.dart';
+import '../../models/order/order_product.dart';
+import '../../models/order/order_status.dart';
+import '../../models/product/product.dart';
 
 class OrderRepositoryFirebase implements IOrderRepository {
   FirebaseFirestore _firestore;
   IProductRepository productRepository;
-  OrderRepositoryFirebase() {
+  OrderRepositoryFirebase(this.productRepository) {
     _firestore = FirebaseFirestore.instance;
-    productRepository = ProductRepositoryFirebase();
   }
 
   @override
@@ -49,6 +48,10 @@ class OrderRepositoryFirebase implements IOrderRepository {
 
     return orders;
   }
+  
+  Future<Order> getCart() {
+    return null;
+  }
 
   @override
   Future<void> saveOrder() async{
@@ -59,7 +62,7 @@ class OrderRepositoryFirebase implements IOrderRepository {
       }
       
       final order = Order(
-        status: OrderStatus.completePurchase.name,
+        status: OrderStatus.complete_purchase.name,
         createdIn: Timestamp.now().toDate()
       );
 
@@ -130,6 +133,24 @@ class OrderRepositoryFirebase implements IOrderRepository {
     order.products = await productRepository.getOrderProducts(order.id);
 
     return order;
+  }
+
+  @override
+  Future<void> deleteCartProduct(Product product) {
+      // TODO: implement deleteCartProduct
+      throw UnimplementedError();
+    }
+  
+    @override
+    Future<void> insertProductOnCart(Product product, int quantity) {
+      // TODO: implement insertProductOnCart
+      throw UnimplementedError();
+    }
+  
+    @override
+    Future<void> updateCartProduct(OrderProduct cartProduct) {
+    // TODO: implement updateCartProduct
+    throw UnimplementedError();
   }
 
 }

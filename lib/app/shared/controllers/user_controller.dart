@@ -1,10 +1,10 @@
-import 'dart:async';
-
-import 'package:fazentech/app/shared/models/user/user_model.dart';
-import 'package:fazentech/app/shared/repositories/auth/auth_repository_interface.dart';
-import 'package:fazentech/app/shared/repositories/user/user_repository_interface.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:rxdart/rxdart.dart';
+import 'dart:async';
+
+import '../models/user/user_model.dart';
+import '../repositories/auth/auth_repository_interface.dart';
+import '../repositories/user/user_repository_interface.dart';
 
 class UserController implements Disposable{
   IAuthRepository authRepository;
@@ -20,13 +20,14 @@ class UserController implements Disposable{
 
   Future<void> _getSignedUser() async{
     _loadingController.sink.add(true);
-    UserModel user = await authRepository.getSignedUser();
+    final user = await userRepository.getUserById('1');
     _userController.sink.add(user);
     _loadingController.sink.add(false);
   }
 
   Future<void> signInWithEmailAndPassword(String email, String password) async{
-    UserModel user = await authRepository.signInWithEmailAndPassword(email, password);
+    await authRepository.signInWithEmailAndPassword(email, password);
+    final user = await userRepository.getUserById('1');
     _userController.sink.add(user);
   }
 
@@ -35,16 +36,16 @@ class UserController implements Disposable{
     _userController.sink.add(null);
   }
 
-  Future<void> signUpWithEmailAndPassword(UserModel user) async{
-    UserModel signedUser = await authRepository.signUpWithEmailAndPassword(user);
+  Future<void> signUpWithEmailAndPassword(UserModel user) async {
+    await userRepository.saveUser(user);
+    final signedUser = await userRepository.getUserById('1');
     if(signedUser == null) return;
 
     _userController.sink.add(signedUser);
   }
 
   Future<void> updateUser(UserModel user) async{
-    await authRepository.updateAccount(user);
-
+    await userRepository.updateUser(user);
     _userController.sink.add(user);
   }
 

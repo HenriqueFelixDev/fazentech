@@ -51,12 +51,11 @@ class Product {
 
   factory Product.fromMap(Map<String, dynamic> map) {
     if (map == null) return null;
-  
     return Product(
-      id: map['id'],
+      id: map['id'].toString(),
       name: map['name'],
       description: map['description'],
-      price: map['price'],
+      price: double.tryParse(map['price'] ?? ''),
       images: List<String>.from(map['images'] ?? []),
       category: Category.fromMap(map['category'] ?? {}),
     );

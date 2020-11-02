@@ -1,8 +1,13 @@
 import 'package:fazentech/app/modules/order/components/product_order_list_tile.dart';
 import 'package:fazentech/app/shared/components/custom_app_bar_widget.dart';
+import 'package:fazentech/app/shared/models/order/order.dart';
+import 'package:fazentech/app/shared/models/order/order_product.dart';
 import 'package:flutter/material.dart';
 
 class OrderDetailsScreen extends StatefulWidget {
+  Order order;
+  OrderDetailsScreen(this.order);
+
   @override
   _OrderDetailsScreenState createState() => _OrderDetailsScreenState();
 }
@@ -15,9 +20,11 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
     final titleTheme = textTheme.headline4.copyWith(color: Colors.grey);
     bool productsTileOpen = false;
 
+    final order = widget.order;
+
     return Scaffold(
       appBar: CustomAppBarWidget(
-        titleText: 'Pedido #16512'
+        titleText: 'Pedido #${order.id}'
       ),
       body: ListView(
         padding: const EdgeInsets.all(24.0),
@@ -50,7 +57,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Icon(Icons.circle),
-                    Text('Enviado')
+                    Text('${order.status}')
                   ],
                 ),
               )
@@ -75,19 +82,23 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                   AnimatedPositioned(
                     duration: Duration(milliseconds: 300),
                     left: productsTileOpen ? 0.0 : 60.0,
-                    child: Text('R\$ 21.99', style: textTheme.headline3),
+                    child: Text('R\$ ${order.total.toStringAsFixed(2)}', style: textTheme.headline3),
                   )
                 ],
               ),
-              children: List.filled(
-                10,
-                ProductOrderListTile(
-                  productImage: 'https://cdn.awsli.com.br/600x700/305/305913/produto/10189815/abacaxi-1441a8b7.jpg',
-                  productPrice: 5.99,
-                  productTitle: 'Abacaxi Pérola Unidade',
-                  productsCount: 1,
-                  totalPrice: 5.99,
-                )
+              children: List.generate(
+                order.products.length,
+                (index) {
+                  final orderProduct = order.products[index];
+
+                  return ProductOrderListTile(
+                    productImage: orderProduct.product.images.elementAt(0),
+                    productPrice: orderProduct.price,
+                    productTitle: orderProduct.product.name,
+                    productsCount: orderProduct.quantity,
+                    totalPrice: orderProduct.price * orderProduct.quantity,
+                  );
+                }
               )
             ),
           )

@@ -1,23 +1,19 @@
 import 'package:fazentech/app/shared/components/gradient_card_widget.dart';
+import 'package:fazentech/app/shared/models/order/order.dart';
 import 'package:fazentech/app/shared/theme/colors.dart';
 import 'package:flutter/material.dart';
 
 class OrderCardWidget extends StatelessWidget {
   final Color mainColor;
-  final String orderId;
-  final DateTime orderDate;
-  final double orderPrice;
-  final String orderStatus;
+  final Order order;
   final Function onDetailsPressed;
   OrderCardWidget({
     Key key,
     this.mainColor,
-    @required this.orderId,
-    @required this.orderDate,
-    @required this.orderPrice,
-    @required this.orderStatus,
+    @required this.order,
     @required this.onDetailsPressed
   }) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
@@ -30,15 +26,15 @@ class OrderCardWidget extends StatelessWidget {
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('#$orderId', style: textTheme.headline3),
+              Text('#${order.id}', style: textTheme.headline3),
               SizedBox(width: 8.0),
               Icon(Icons.date_range, color: Colors.black54),
               Expanded(
-                child: Text(orderDate.toString(), style: textTheme.headline5.copyWith(color: Colors.black54))
+                child: Text(order.createdIn.toString(), style: textTheme.headline5.copyWith(color: Colors.black54))
               ),
               Expanded(
                 child: Text(
-                  orderStatus, 
+                  order.status.toString(),
                   textAlign: TextAlign.end, 
                   style: textTheme.headline5.copyWith(color: _mainColor)
                 ),
@@ -48,7 +44,7 @@ class OrderCardWidget extends StatelessWidget {
           Row(
             children: [
               Text(
-                'R\$ ${orderPrice.toStringAsFixed(2)}', 
+                'R\$ ${order.total.toStringAsFixed(2)}', 
                 style: textTheme.headline2.copyWith(color: _mainColor)
               ),
               Expanded(
@@ -57,7 +53,7 @@ class OrderCardWidget extends StatelessWidget {
                   child: FlatButton(
                     padding: const EdgeInsets.all(8.0),
                     child: Text('Ver detalhes', style: textTheme.headline4.copyWith(color: ColorsSet.accentColor)),
-                    onPressed: (){},
+                    onPressed: onDetailsPressed,
                   )
                 )
               )

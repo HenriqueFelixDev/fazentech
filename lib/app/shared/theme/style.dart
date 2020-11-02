@@ -1,5 +1,6 @@
-import 'package:fazentech/app/shared/theme/colors.dart';
 import 'package:flutter/material.dart';
+
+import 'colors.dart';
 
 final appTheme = ThemeData(
   primaryColor: ColorsSet.primaryColor,

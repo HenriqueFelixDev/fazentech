@@ -1,11 +1,13 @@
-import 'package:fazentech/app/shared/models/order/order_product.dart';
-import 'package:fazentech/app/shared/models/product/product.dart';
-import 'package:fazentech/app/shared/models/product/product_filter.dart';
-import 'package:fazentech/app/shared/repositories/product/category_repository_interface.dart';
+import 'category_repository_interface.dart';
+import '../../models/order/order_product.dart';
+import '../../models/product/product.dart';
+import '../../models/product/product_filter.dart';
 
 abstract class IProductRepository {
   ICategoryRepository categoryRepository;
   Future<List<Product>> getProducts(ProductFilter filter);
+  Future<List<Product>> getTopProducts();
+  Future<List<Product>> getRecentlyAddedProducts();
   Future<Product> getProductById(String id);
   Future<List<OrderProduct>> getOrderProducts(String orderId);
   Future<List<OrderProduct>> getCartProducts();

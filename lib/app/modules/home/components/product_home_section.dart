@@ -1,14 +1,17 @@
 import 'package:fazentech/app/shared/components/product_card.dart';
+import 'package:fazentech/app/shared/models/product/product.dart';
 import 'package:fazentech/app/shared/theme/colors.dart';
 import 'package:flutter/material.dart';
 
 class ProductHomeSection extends StatelessWidget {
   final String title;
+  final List<Product> products;
   final Function onSeeAllPressed;
   ProductHomeSection({
     Key key,
-    this.title,
-    this.onSeeAllPressed
+    @required this.title,
+    @required this.products,
+    @required this.onSeeAllPressed
   }) : super(key: key);
   
   @override
@@ -23,7 +26,7 @@ class ProductHomeSection extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text('Mais Comprados', style: textTheme.headline3,),
+              Text(title, style: textTheme.headline3,),
               FlatButton(
                 padding: EdgeInsets.zero,
                 child: Text('Ver Mais >>', style: textTheme.headline3.copyWith(color: ColorsSet.accentColor)),
@@ -35,11 +38,12 @@ class ProductHomeSection extends StatelessWidget {
             height: 250.0,
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
+              itemCount: products.length,
               itemBuilder: (_, index) {
+                final product = products[index];
+
                 return ProductCard(
-                  image: 'https://picsum.photos/id/$index/300/200', 
-                  title: 'Abacaxi Pérola Unidade', 
-                  price: 5.49, 
+                  product: product,
                   onCartPressed: (){},
                   onTap: (){},
                 );

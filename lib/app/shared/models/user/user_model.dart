@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-import 'package:fazentech/app/shared/models/user/address.dart';
-import 'package:fazentech/app/shared/models/user/phone.dart';
+import 'address.dart';
+import 'phone.dart';
 
 class UserModel {
   String id;
@@ -78,7 +78,7 @@ class UserModel {
     if (map == null) return null;
   
     return UserModel(
-      id: map['id'],
+      id: map['id'].toString(),
       photo: map['photo'],
       name: map['name'],
       email: map['email'],

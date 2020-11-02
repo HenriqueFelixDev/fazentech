@@ -37,7 +37,7 @@ class OrderProduct {
       'id': id,
       'product': product?.toMap(),
       'quantity': quantity,
-      'createdIn': createdIn?.toString(),
+      'created_in': createdIn?.toString(),
       'price': price,
     };
   }
@@ -46,11 +46,11 @@ class OrderProduct {
     if (map == null) return null;
   
     return OrderProduct(
-      id: map['id'],
+      id: map['id'].toString(),
       product: Product.fromMap(map['product'] ?? {}),
       quantity: map['quantity'],
-      createdIn: DateTime.tryParse(map['createdIn'] ?? ''),
-      price: map['price'],
+      createdIn: DateTime.tryParse(map['created_in'] ?? ''),
+      price: double.tryParse(map['price'] ?? ''),
     );
   }
 

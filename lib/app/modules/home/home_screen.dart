@@ -1,8 +1,11 @@
 import 'package:fazentech/app/modules/home/components/home_banner_widget.dart';
 import 'package:fazentech/app/modules/home/components/product_home_section.dart';
+import 'package:fazentech/app/modules/home/home_controller.dart';
 import 'package:fazentech/app/shared/components/custom_app_bar_widget.dart';
 import 'package:fazentech/app/shared/controllers/user_controller.dart';
 import 'package:fazentech/app/shared/models/user/user_model.dart';
+import 'package:fazentech/app/shared/repositories/product/category_repository_api.dart';
+import 'package:fazentech/app/shared/repositories/product/product_repository_api.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
@@ -18,6 +21,14 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final userController = Modular.get<UserController>();
+  final controller = HomeController(ProductRepositoryAPI(CategoryRepositoryAPI()));
+
+  @override
+  void initState() {
+    super.initState();
+    controller.searchRecentlyAddedProducts();
+    controller.searchTopProducts();
+  }
 
   _onMenuItemPressed(MenuButtons buttonPressed, UserModel user) {
     switch(buttonPressed) {
@@ -52,17 +63,40 @@ class _HomeScreenState extends State<HomeScreen> {
               else _signInButton()
             ]
           ),
-          body: Container(
-            child: ListView(
-              padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 24.0),
-              children: [
-                HomeBannerWidget(),
-                SizedBox(height: 16.0),
-                ProductHomeSection(),
-                ProductHomeSection(),
-                ProductHomeSection(),
-              ],
-            )
+          body: ListView(
+            padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 24.0),
+            children: [
+              HomeBannerWidget(),
+              SizedBox(height: 16.0),
+              StreamBuilder(
+                stream: controller.recentlyAddedProducts,
+                builder: (context, snapshot) {
+                  if(snapshot.connectionState == ConnectionState.none || snapshot.connectionState == ConnectionState.waiting) {
+                    return Center(child: CircularProgressIndicator());
+                  }
+
+                  return ProductHomeSection(
+                    title: 'Adicionados Recentemente',
+                    products: snapshot.data,
+                    onSeeAllPressed: (){},
+                  );
+                }
+              ),
+              StreamBuilder(
+                stream: controller.topProducts,
+                builder: (context, snapshot) {
+                  if(snapshot.connectionState == ConnectionState.none || snapshot.connectionState == ConnectionState.waiting) {
+                    return Center(child: CircularProgressIndicator());
+                  }
+
+                  return ProductHomeSection(
+                    title: 'Mais Comprados',
+                    products: snapshot.data,
+                    onSeeAllPressed: (){},
+                  );
+                }
+              ),
+            ],
           )
         );
       }

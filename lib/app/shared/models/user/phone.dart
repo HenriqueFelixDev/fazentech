@@ -26,7 +26,7 @@ class Phone {
   Map<String, dynamic> toMap() {
     return {
       'id': id,
-      'areaCode': areaCode,
+      'area_code': areaCode,
       'number': number,
     };
   }
@@ -35,9 +35,9 @@ class Phone {
     if (map == null) return null;
   
     return Phone(
-      id: map['id'],
-      areaCode: map['areaCode'],
-      number: map['number'],
+      id: map['id'].toString(),
+      areaCode: map['area_code'].toString(),
+      number: map['number'].toString()
     );
   }
 

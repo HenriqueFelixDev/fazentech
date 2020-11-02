@@ -1,4 +1,5 @@
 import 'package:fazentech/app/modules/auth/submodules/signup/signup_controller.dart';
+import 'package:fazentech/app/shared/components/alerts/snackbar_alert_widget.dart';
 import 'package:fazentech/app/shared/components/custom_app_bar_widget.dart';
 import 'package:fazentech/app/shared/components/form/custom_text_form_field_widget.dart';
 import 'package:fazentech/app/shared/controllers/user_controller.dart';
@@ -64,7 +65,7 @@ class _SignUpAddressScreenState extends State<SignUpAddressScreen> {
           CustomTextFormField(
             label: 'Bairro',
             textInputAction: TextInputAction.next,
-            controller: signupController.districtController,
+            controller: signupController.neighborhoodController,
             obscureText: true
           ),
 

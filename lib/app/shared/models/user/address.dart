@@ -9,7 +9,7 @@ class Address {
   String city;
   AddressState state;
   String postalCode;
-  String district;
+  String neighborhood;
   String complement;
 
   Address({
@@ -19,7 +19,7 @@ class Address {
     this.city,
     this.state,
     this.postalCode,
-    this.district,
+    this.neighborhood,
     this.complement,
   });
 
@@ -30,7 +30,7 @@ class Address {
     String city,
     AddressState state,
     String postalCode,
-    String district,
+    String neighborhood,
     String complement,
   }) {
     return Address(
@@ -40,7 +40,7 @@ class Address {
       city: city ?? this.city,
       state: state ?? this.state,
       postalCode: postalCode ?? this.postalCode,
-      district: district ?? this.district,
+      neighborhood: neighborhood ?? this.neighborhood,
       complement: complement ?? this.complement,
     );
   }
@@ -52,8 +52,8 @@ class Address {
       'number': number,
       'city': city,
       'state': state?.name,
-      'postalCode': postalCode,
-      'district': district,
+      'postal_code': postalCode,
+      'neighborhood': neighborhood,
       'complement': complement,
     };
   }
@@ -62,13 +62,13 @@ class Address {
     if (map == null) return null;
   
     return Address(
-      id: map['id'],
+      id: map['id'].toString(),
       street: map['street'],
-      number: map['number'],
+      number: map['number'].toString(),
       city: map['city'],
-      state: AddressState.valueOf(map['state']),
-      postalCode: map['postalCode'],
-      district: map['district'],
+      state: AddressState.valueOf(map['state'].toString().toLowerCase()),
+      postalCode: map['postal_code'].toString(),
+      neighborhood: map['neighborhood'],
       complement: map['complement'],
     );
   }
@@ -84,7 +84,7 @@ class Address {
 
   @override
   String toString() {
-    return 'Address(id: $id, street: $street, number: $number, city: $city, state: $state, postalCode: $postalCode, district: $district, complement: $complement)';
+    return 'Address(id: $id, street: $street, number: $number, city: $city, state: $state, postalCode: $postalCode, neighborhood: $neighborhood, complement: $complement)';
   }
 
   @override
@@ -98,7 +98,7 @@ class Address {
       o.city == city &&
       o.state == state &&
       o.postalCode == postalCode &&
-      o.district == district &&
+      o.neighborhood == neighborhood &&
       o.complement == complement;
   }
 
@@ -110,7 +110,7 @@ class Address {
       city.hashCode ^
       state.hashCode ^
       postalCode.hashCode ^
-      district.hashCode ^
+      neighborhood.hashCode ^
       complement.hashCode;
   }
 }

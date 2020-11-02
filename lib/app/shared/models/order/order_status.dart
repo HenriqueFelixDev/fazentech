@@ -5,10 +5,10 @@ part 'order_status.g.dart';
 
 class OrderStatus extends EnumClass {
   static const OrderStatus buying = _$buying;
-  static const OrderStatus completePurchase = _$completePurchase;
-  static const OrderStatus preparingForShipment = _$preparingForShipment;
+  static const OrderStatus complete_purchase = _$complete_purchase;
+  static const OrderStatus preparing_for_shipment = _$preparing_for_shipment;
   static const OrderStatus sent = _$sent;
-  static const OrderStatus arrivedAtDestination = _$arrivedAtDestination;
+  static const OrderStatus arrived_at_destination = _$arrived_at_destination;
 
   const OrderStatus._(String name) : super(name);
 

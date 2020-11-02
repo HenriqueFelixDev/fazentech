@@ -1,7 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:fazentech/app/shared/adapter/product/document_snapshot_category_adapter.dart';
-import 'package:fazentech/app/shared/models/product/category.dart';
-import 'package:fazentech/app/shared/repositories/product/category_repository_interface.dart';
+
+import 'category_repository_interface.dart';
+import '../../adapter/product/document_snapshot_category_adapter.dart';
+import '../../models/product/category.dart';
 
 class CategoryRepositoryFirebase implements ICategoryRepository {
   FirebaseFirestore _firestore;

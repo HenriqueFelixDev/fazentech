@@ -24,7 +24,7 @@ class SignupController {
   final cellphoneNumberController = TextEditingController();
   final streetController = TextEditingController();
   final numberController = TextEditingController();
-  final districtController = TextEditingController();
+  final neighborhoodController = TextEditingController();
   final cityController = TextEditingController();
   final postalCodeController = TextEditingController();
   final complementController = TextEditingController();
@@ -54,7 +54,7 @@ class SignupController {
         city: cityController.text,
         state: state,
         postalCode: postalCodeController.text,
-        district: districtController.text,
+        neighborhood: neighborhoodController.text,
         complement: complementController.text,
       )
     );

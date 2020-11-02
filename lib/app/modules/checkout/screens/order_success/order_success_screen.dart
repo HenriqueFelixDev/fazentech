@@ -38,7 +38,7 @@ class _OrderSuccessScreenState extends State<OrderSuccessScreen> {
                 SizedBox(height: 16.0),
                 FlatButton(
                   child: Text('OK', style: TextStyle(fontSize: 22.0, color: Theme.of(context).accentColor)),
-                  onPressed: () => Modular.to.popUntil(ModalRoute.withName('/')),
+                  onPressed: () => Modular.to.popUntil(ModalRoute.withName('/main')),
                 )
               ],
             ),

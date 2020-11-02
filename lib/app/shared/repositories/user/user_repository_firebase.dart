@@ -1,9 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:fazentech/app/shared/adapter/user/document_snapshot_user_adapter.dart';
-import 'package:fazentech/app/shared/models/user/user_model.dart';
-import 'package:fazentech/app/shared/repositories/auth/auth_repository_firebase.dart';
-import 'package:fazentech/app/shared/repositories/auth/auth_repository_interface.dart';
-import 'package:fazentech/app/shared/repositories/user/user_repository_interface.dart';
+
+import 'user_repository_interface.dart';
+import '../../adapter/user/document_snapshot_user_adapter.dart';
+import '../../models/user/user_model.dart';
 
 class UserRepositoryFirebase implements IUserRepository {
   FirebaseFirestore _firestore;

@@ -1,4 +1,4 @@
-import 'package:fazentech/app/shared/models/product/category.dart';
+import '../../models/product/category.dart';
 
 abstract class ICategoryRepository {
   Future<List<Category>> getAllCategories();

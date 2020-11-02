@@ -18,47 +18,67 @@ class CartListTileWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final iconButtonsColor = Theme.of(context).accentColor;
 
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 8.0),
       child: GradientCardWidget(
-        child: ListTile(
-          leading: Image.network(productImage, fit: BoxFit.cover),
-          title: Container(
-            margin: const EdgeInsets.only(bottom: 4.0),
-            child: Text(productTitle)
-          ),
-          subtitle: Text('R\$ ${productPrice.toStringAsFixed(2)}', style: Theme.of(context).textTheme.headline6.copyWith(fontWeight: FontWeight.bold),),
-          trailing: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              IconButton(
-                icon: Icon(Icons.add, color: iconButtonsColor),
-                onPressed: () => onProductsCountChange(1),
-              ),
-              Container(
-                width: 30.0,
-                child: TextFormField(
-                  textAlign: TextAlign.center,
-                  initialValue: productsCount.toString(),
-                  decoration: InputDecoration(
-                    isCollapsed: true,
-                    filled:  true,
-                    fillColor: Colors.white,
-                    contentPadding: const EdgeInsets.all(8.0),
-                    border: OutlineInputBorder()
-                  ),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Container(
+              width: 50.0,
+              height: 50.0,
+              child: Image.network(productImage, fit: BoxFit.cover)
+            ),
+            Expanded(
+              child: Container(
+                padding: const EdgeInsets.only(left: 16.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      margin: const EdgeInsets.only(bottom: 4.0),
+                      child: Text(productTitle)
+                    ),
+                    Text('R\$ ${productPrice.toStringAsFixed(2)}', style: Theme.of(context).textTheme.headline3),
+                  ],
                 ),
               ),
-              IconButton(
-                icon: Icon(Icons.remove, color: iconButtonsColor),
-                onPressed: () => onProductsCountChange(-1),
-              )
-            ],
-          ),
+            ),
+            _productQuantityWidget(context)
+          ]
         )
       ),
+    );
+  }
+
+  Widget _productQuantityWidget(BuildContext context) {
+    final iconButtonsColor = Theme.of(context).accentColor;
+
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        IconButton(
+          icon: Icon(Icons.add, color: iconButtonsColor),
+          onPressed: () => onProductsCountChange(1),
+        ),
+        Container(
+          width: 30.0,
+          height: 40.0,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(5),
+            border: Border.all(color: Colors.grey[400])
+          ),
+          child: Center(
+            child: Text('$productsCount')
+          )
+        ),
+        IconButton(
+          icon: Icon(Icons.remove, color: iconButtonsColor),
+          onPressed: () => onProductsCountChange(-1),
+        )
+      ],
     );
   }
 }

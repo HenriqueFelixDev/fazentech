@@ -1,8 +1,9 @@
-import 'package:fazentech/app/modules/cart/cart_screen.dart';
-import 'package:fazentech/app/modules/home/home_screen.dart';
-import 'package:fazentech/app/modules/product/submodules/categories/categories_screen.dart';
-import 'package:fazentech/app/modules/product/submodules/products/products_screen.dart';
 import 'package:flutter/material.dart';
+
+import 'modules/cart/cart_screen.dart';
+import 'modules/home/home_screen.dart';
+import 'modules/product/submodules/categories/categories_screen.dart';
+import 'modules/product/submodules/products/products_screen.dart';
 
 class MainScreen extends StatefulWidget {
   @override

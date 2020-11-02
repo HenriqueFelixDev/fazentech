@@ -79,7 +79,7 @@ class _AccountScreenState extends State<AccountScreen> {
             accountData: {
               'Rua': address.street,
               'Número': address.number,
-              'Bairro': address.district,
+              'Bairro': address.neighborhood,
               'Cidade': address.city,
               'Estado': address.state.name.toUpperCase(),
               'Complemento': address.complement == null || address.complement.isEmpty

@@ -1,4 +1,4 @@
-import 'package:fazentech/app/shared/models/user/user_model.dart';
+import '../../models/user/user_model.dart';
 
 abstract class IUserRepository {
   Future<void> saveUser(UserModel user);

@@ -1,59 +1,43 @@
-import 'package:fazentech/app/shared/models/user/user_model.dart';
-import 'package:fazentech/app/shared/repositories/auth/auth_repository_interface.dart';
-import 'package:fazentech/app/shared/repositories/user/user_repository_firebase.dart';
-import 'package:fazentech/app/shared/repositories/user/user_repository_interface.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
+import 'auth_repository_interface.dart';
+import '../../models/user/user_model.dart';
+
 class AuthRepositoryFirebase implements IAuthRepository {
-  IUserRepository userRepository;
-  FirebaseAuth _firebaseAuth;
-  AuthRepositoryFirebase(this.userRepository) {
-    _firebaseAuth = FirebaseAuth.instance;
+  AuthRepositoryFirebase();
+  FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+
+  @override
+  Future<String> getAuthenticationToken() {
+    return _firebaseAuth?.currentUser?.getIdToken();
   }
 
   @override
-  Future<UserModel> getSignedUser() async{
-    final user = _firebaseAuth.currentUser;
-    if(user == null) return Future.value(null);
-
-    final userModel = await userRepository.getUserById(user.uid);
-    userModel.photo = user.photoURL;
-    return userModel;
-  }
-
-  @override
-  Future<UserModel> signInWithEmailAndPassword(String email, String password) async{
-    final signedUser = await getSignedUser();
-    if(signedUser != null) return signedUser;
-
-    final userCredential = 
-      await _firebaseAuth.signInWithEmailAndPassword(email: email, password: password);
-    final userId = userCredential.user.uid;
+  Future<Map<String, String>> signInWithEmailAndPassword(String email, String password) async{
+    String token = await getAuthenticationToken();
+    String refreshToken = _firebaseAuth?.currentUser?.refreshToken;
     
-    final user = await userRepository.getUserById(userId);
-    user.photo = userCredential.user.photoURL;
-    
-    return user;
+    if(token == null && refreshToken == null) {
+      final userCredential = 
+        await _firebaseAuth.signInWithEmailAndPassword(email: email, password: password);
+      
+      token = await userCredential.user.getIdToken();
+      refreshToken = userCredential.user.refreshToken;
+    }
+
+    return {
+      'token': token,
+      'refreshToken': refreshToken
+    };
   }
 
   @override
   Future<void> signOut() async => _firebaseAuth.signOut();
 
   @override
-  Future<UserModel> signUpWithEmailAndPassword(UserModel user) async{
-    final userCredential = 
-      await _firebaseAuth
-        .createUserWithEmailAndPassword( email: user.email, password: user.password);
-    user.id = userCredential.user.uid;
-    user.photo = userCredential.user.photoURL;
-
-    await userRepository.saveUser(user);
-    return user;
-  }
-
-  Future<void> updateAccount(UserModel user) async{
-    await _firebaseAuth.currentUser.updateProfile(photoURL: user.photo);
-    await userRepository.updateUser(user);
+  Future<void> signUpWithEmailAndPassword(UserModel user) async{
+    await _firebaseAuth
+      .createUserWithEmailAndPassword( email: user.email, password: user.password);
   }
 
 }
