@@ -17,6 +17,8 @@ import 'package:fazentech/app/shared/repositories/product/product_repository_api
 import 'package:fazentech/app/shared/repositories/product/product_repository_interface.dart';
 import 'package:fazentech/app/shared/repositories/user/user_repository_api.dart';
 import 'package:fazentech/app/shared/repositories/user/user_repository_interface.dart';
+import 'shared/services/http/http_client_interface.dart';
+import 'shared/services/http/http_client_impl.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
@@ -25,6 +27,7 @@ import 'app_widget.dart';
 class AppModule extends MainModule {
   @override
   List<Bind> get binds => [
+    Bind<IHttpClient>((i) => HttpClientImpl(baseUrl: 'http://10.0.0.106')),
     Bind<IUserRepository>((i) => UserRepositoryAPI()),
     Bind<IAuthRepository>((i) => AuthRepositoryFirebase()),
     Bind<ICategoryRepository>((i) => CategoryRepositoryAPI()),

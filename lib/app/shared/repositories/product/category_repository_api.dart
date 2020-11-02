@@ -1,17 +1,16 @@
-import 'package:http/http.dart' as http;
-import 'dart:convert';
+import 'package:fazentech/app/shared/services/http/http_client_interface.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 
 import 'category_repository_interface.dart';
 import '../../models/product/category.dart';
 
 class CategoryRepositoryAPI implements ICategoryRepository {
-  static const BASE_URL = 'http://10.0.0.106';
+  final httpClient = Modular.get<IHttpClient>();
+  
   Future<List<Category>> getAllCategories() async{
-    final response = await http.get('$BASE_URL/categories');
+    final categoriesMap = await httpClient.get('/categories');
 
-    if(response.statusCode >= 200 && response.statusCode < 300) {
-      final categoriesMap = json.decode(response.body);
-      
+    if(categoriesMap != null) {
       return categoriesMap.map<Category>(
         (categoryMap) => Category(
           id: categoryMap['id'].toString(),
@@ -21,7 +20,8 @@ class CategoryRepositoryAPI implements ICategoryRepository {
         )
       ).toList();
     }
-    return null;
+
+    return [];
   }
 
   Future<Category> getCategoryById(String id) async {

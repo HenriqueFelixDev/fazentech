@@ -1,3 +1,4 @@
+import 'package:fazentech/app/shared/services/http/http_client_interface.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -11,8 +12,8 @@ import '../../models/order/order_filter.dart';
 import '../../models/order/order.dart';
 
 class OrderRepositoryAPI implements IOrderRepository {
-  final _authRepository = Modular.get<IAuthRepository>(); 
-  static const BASE_URL = 'http://10.0.0.106';
+  final _authRepository = Modular.get<IAuthRepository>();
+  final httpClient = Modular.get<IHttpClient>();
   
   @override
   IProductRepository productRepository;
@@ -26,9 +27,8 @@ class OrderRepositoryAPI implements IOrderRepository {
   
   Future<Order> getCart() async{
     final token = await _authRepository.getAuthenticationToken();
-    final response = await http.get('$BASE_URL/cart', headers: {'Authorization': 'Bearer $token'});
-    if(response.statusCode >= 200 && response.statusCode < 300) {
-      final cartMap = json.decode(response.body);
+    final cartMap = await httpClient.get('/cart', headers: {'Authorization': 'Bearer $token'});
+    if(cartMap != null) {
       return Order.fromMap(cartMap);
     }
     return null;
@@ -37,14 +37,13 @@ class OrderRepositoryAPI implements IOrderRepository {
   @override
   Future<List<Order>> getOrders(OrderFilter filter) async{
     final token = await _authRepository.getAuthenticationToken();
-    final response = await http.get('$BASE_URL/orders', headers: {'Authorization': 'Bearer $token'});
-    if(response.statusCode >= 200 && response.statusCode < 300) {
-      final ordersMap = json.decode(response.body);
+    final ordersMap = await httpClient.get('/orders', headers: {'Authorization': 'Bearer $token'});
+    if(ordersMap != null) {
       return ordersMap?.map<Order>(
         (orderMap) => Order.fromMap(orderMap)
       )?.toList();
     }
-    return null;
+    return [];
   }
 
   @override
@@ -62,42 +61,30 @@ class OrderRepositoryAPI implements IOrderRepository {
   @override
   Future<void> insertProductOnCart(Product product, [int quantity = 1]) async{
     final token = await _authRepository.getAuthenticationToken();
-    final response = await http.post(
-      '$BASE_URL/cart/products', 
+    await httpClient.post(
+      '/cart/products', 
       headers: {'Authorization': 'Bearer $token'}, 
       body: {'productId': product.id, 'quantity': quantity.toString()}
     );
-
-    if(response.statusCode >= 300) {
-      throw new Exception('Falha ao adicionar o produto');
-    }
   }
 
   @override
   Future<void> deleteCartProduct(Product product) async{
     final token = await _authRepository.getAuthenticationToken();
-    final response = await http.delete(
-      '$BASE_URL/cart/products/${product.id}', 
+    await httpClient.delete(
+      '/cart/products/${product.id}', 
       headers: {'Authorization': 'Bearer $token'}
     );
-
-    if(response.statusCode >= 300) {
-      throw new Exception('Falha ao remover o produto');
-    }
   }
 
   @override
   Future<void> updateCartProduct(OrderProduct cartProduct) async{
     final token = await _authRepository.getAuthenticationToken();
-    final response = await http.put(
-      '$BASE_URL/cart/products', 
+    await httpClient.put(
+      '/cart/products', 
       headers: {'Authorization': 'Bearer $token'}, 
       body: {'productId': cartProduct.product.id, 'quantity': cartProduct.quantity.toString()}
     );
-
-    if(response.statusCode >= 300) {
-      throw new Exception('Falha ao atualizar o produto');
-    }
   }
 
 }

@@ -1,5 +1,5 @@
-import 'package:http/http.dart' as http;
-import 'dart:convert';
+import 'package:fazentech/app/shared/services/http/http_client_interface.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 
 import 'category_repository_interface.dart';
 import '../../models/product/category.dart';
@@ -11,8 +11,8 @@ import 'product_repository_interface.dart';
 
 class ProductRepositoryAPI implements IProductRepository {
   ICategoryRepository categoryRepository;
+  final httpClient = Modular.get<IHttpClient>();
   ProductRepositoryAPI(this.categoryRepository);
-  static const BASE_URL = 'http://10.0.0.106';
 
   String _buildProductsQuery(ProductFilter filter) {
     if(filter == null) {
@@ -49,11 +49,9 @@ class ProductRepositoryAPI implements IProductRepository {
 
   Future<List<Product>> getProducts(ProductFilter filter) async{
     final query = _buildProductsQuery(filter);
-    final response = await http.get('$BASE_URL/products$query');
+    final productsMap = await httpClient.get('/products$query');
 
-    if(response.statusCode >= 200 && response.statusCode < 300) {
-      final productsMap = json.decode(response.body);
-
+    if(productsMap != null) {
       return productsMap.map<Product>(
         (productMap) => Product(
           id: productMap['id'].toString(),
@@ -65,17 +63,16 @@ class ProductRepositoryAPI implements IProductRepository {
         )
       ).toList();
     }
+
     return [];
   }
 
   
   Future<List<Product>> getTopProducts() async{
-    final response = await http.get('$BASE_URL/products/top');
-
-    if(response.statusCode >= 200 && response.statusCode < 300) {
-      final productsMap = json.decode(response.body);
-
-      return productsMap.map<Product>(
+    final topProductsMap = await httpClient.get('/products/top');
+    
+    if(topProductsMap != null) {
+      return topProductsMap.map<Product>(
         (productMap) => Product(
           id: productMap['id'].toString(),
           name: productMap['name'],
@@ -86,14 +83,14 @@ class ProductRepositoryAPI implements IProductRepository {
         )
       ).toList();
     }
+
     return [];
   }
 
   Future<List<Product>> getRecentlyAddedProducts() async{
-    final response = await http.get('$BASE_URL/products/recently-added');
+    final productsMap = await httpClient.get('/products/recently-added');
 
-    if(response.statusCode >= 200 && response.statusCode < 300) {
-      final productsMap = json.decode(response.body);
+    if(productsMap != null) {
       return productsMap.map<Product>(
         (productMap) => Product(
           id: productMap['id'].toString(),
