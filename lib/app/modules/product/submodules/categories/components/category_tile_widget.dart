@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:fazentech/app/shared/components/image_loading_placeholder_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:octo_image/octo_image.dart';
 
@@ -27,9 +28,11 @@ class CategoryTileWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               OctoImage(
+                width: 50.0,
+                height: 50.0,
                 image: CachedNetworkImageProvider(icon),
                 errorBuilder: OctoError.icon(icon: Icons.info, color: Colors.red),
-                placeholderBuilder: OctoPlaceholder.circularProgressIndicator()
+                placeholderBuilder: (_) => ImageLoadingPlaceholderWidget()
               ),
               Text(category, style: TextStyle(fontSize: 22.0, color: primaryColor))
             ]

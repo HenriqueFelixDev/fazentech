@@ -93,7 +93,7 @@ class ProductRepositoryFirebase implements IProductRepository {
       if(filter.categories != null && filter.categories.isNotEmpty) {
         productsQuery = productsReference.where(
           'category', 
-          whereIn: filter.categories.map((category) => category.id).toList()
+          whereIn: filter.categories
         );
       }
 

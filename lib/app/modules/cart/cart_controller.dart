@@ -51,7 +51,9 @@ class CartController {
 
   void _updateCart(Order cart) {
     _cart = cart;
-    _cartProducts = cart.products;
-    _cartSubject.sink.add(_cart);
+    if(cart != null) {
+      _cartProducts = cart.products;
+      _cartSubject.sink.add(_cart);
+    }
   }
 }

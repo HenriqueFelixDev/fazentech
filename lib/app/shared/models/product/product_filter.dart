@@ -4,7 +4,7 @@ import 'package:flutter/foundation.dart' show listEquals;
 import 'category.dart';
 
 class ProductFilter {
-  List<Category> categories;
+  List<int> categories;
   String search;
   double minPrice;
   double maxPrice;
@@ -17,7 +17,7 @@ class ProductFilter {
   });
 
   ProductFilter copyWith({
-    List<Category> categories,
+    List<int> categories,
     String search,
     double minPrice,
     double maxPrice,
@@ -32,7 +32,7 @@ class ProductFilter {
 
   Map<String, dynamic> toMap() {
     return {
-      'categories': categories?.map((x) => x?.toMap())?.toList(),
+      'categories': categories,
       'search': search,
       'minPrice': minPrice,
       'maxPrice': maxPrice,
@@ -43,7 +43,7 @@ class ProductFilter {
     if (map == null) return null;
   
     return ProductFilter(
-      categories: List<Category>.from(map['categories']?.map((x) => Category.fromMap(x)) ?? []),
+      categories: List<int>.from(map['categories'] ?? []),
       search: map['search'],
       minPrice: map['minPrice'],
       maxPrice: map['maxPrice'],

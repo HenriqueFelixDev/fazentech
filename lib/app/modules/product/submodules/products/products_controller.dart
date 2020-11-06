@@ -8,13 +8,11 @@ import 'package:rxdart/rxdart.dart';
 class ProductsController {
   IProductRepository productRepository;
   ProductsController(this.productRepository) {
-    _filterSubscription = _filterSubject.stream.listen(
-      (filter) {
-        searchProducts(filter: filter);
-      }
-    );
+    _filterSubscription = _filterSubject.stream.listen((filter) {
+      print(filter);
+      searchProducts(productFilter: filter);
+    });
   }
-
   List<Product> _products = [];
   final _productsSubject = BehaviorSubject<List<Product>>.seeded([]);
   Stream<List<Product>> get products => _productsSubject.stream;
@@ -24,9 +22,9 @@ class ProductsController {
   StreamSubscription<ProductFilter> _filterSubscription;
 
   
-  Future<Null> searchProducts({ProductFilter filter}) async {
+  Future<Null> searchProducts({ProductFilter productFilter}) async {
     try {
-      final products = await productRepository.getProducts(filter);
+      final products = await productRepository.getProducts(productFilter);
       _updateProducts(products);
     } catch(e) {
       print('ERROR: $e');

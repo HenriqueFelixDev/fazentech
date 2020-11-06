@@ -1,9 +1,11 @@
 import 'package:fazentech/app/modules/cart/cart_controller.dart';
+import 'package:fazentech/app/shared/components/image_loading_placeholder_widget.dart';
 import 'package:fazentech/app/shared/models/product/product.dart';
 import 'package:fazentech/app/shared/theme/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:octo_image/octo_image.dart';
 
 class ProductCard extends StatelessWidget {
   final Product product;
@@ -78,16 +80,40 @@ class ProductCard extends StatelessWidget {
   }
 
   Widget _getProductTitle(BuildContext context) {
-    return Text(product.name, style: Theme.of(context).textTheme.headline3);
+    return Text(
+      product.name, 
+      maxLines: 2, 
+      overflow: TextOverflow.ellipsis, 
+      style: Theme.of(context).textTheme.headline3
+    );
   }
 
-  Widget _verticalCard(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Image.network(product.images[0], fit: BoxFit.cover),
-        Container(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+  List<Widget> _cardContent(BuildContext context, {bool isHorizontal = false}) {
+    final productInfoMargin = isHorizontal
+      ? EdgeInsets.zero
+      : EdgeInsets.only(top: 16.0);
+    
+    final productInfoPadding = isHorizontal
+      ? EdgeInsets.only(left: 16.0)
+      : EdgeInsets.symmetric(horizontal: 16.0);
+
+    final imageAspectRatio = isHorizontal
+      ? 1.0
+      : 16/9;
+
+    return [
+      AspectRatio(
+          aspectRatio: imageAspectRatio,
+          child: OctoImage(
+            image: NetworkImage(product.images[0]), 
+            fit: BoxFit.cover,
+            placeholderBuilder: (_) => ImageLoadingPlaceholderWidget()
+          ),
+      ),
+      Expanded(
+        child: Container(
+          margin: productInfoMargin,
+          padding: productInfoPadding,
           child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -100,8 +126,15 @@ class ProductCard extends StatelessWidget {
               )
             ]
           ),
-        )
-      ],
+        ),
+      )
+    ];
+  }
+
+  Widget _verticalCard(BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: _cardContent(context),
     );
   }
   
@@ -109,28 +142,8 @@ class ProductCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(4.0),
       child: Row(
-        children: [
-          AspectRatio(
-            aspectRatio: 1,
-            child: Image.network(product.images[0], fit: BoxFit.cover),
-          ),
-          Expanded(
-            child: Container(
-              margin: const EdgeInsets.only(left: 16.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  _getProductTitle(context),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: _getProductInfo(context),
-                  )
-                ],
-              ),
-            ),
-          )
-        ],
+        mainAxisSize: MainAxisSize.min,
+        children: _cardContent(context, isHorizontal: true)
       ),
     );
   }
@@ -144,7 +157,7 @@ class ProductCard extends StatelessWidget {
 
     return Container(
       width: 200.0,
-      height: 100.0,
+      height: 110.0,
       margin: const EdgeInsets.only(right: 4.0),
       child: InkWell(
         onTap: () => Modular.to.pushNamed('/produtos/${product.id}', arguments: product),

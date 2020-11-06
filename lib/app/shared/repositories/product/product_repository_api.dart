@@ -25,9 +25,7 @@ class ProductRepositoryAPI implements IProductRepository {
     }
 
     if(filter.categories != null && filter.categories.isNotEmpty) {
-      final categoriesIds = filter.categories.map(
-        (category) => category.id
-      );
+      final categoriesIds = filter.categories;
       uri += 'categories=$categoriesIds&';
     }
 

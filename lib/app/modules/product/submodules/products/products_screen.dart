@@ -132,6 +132,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
                 filter.minPrice = double.tryParse(minPriceController.text);
                 filter.maxPrice = double.tryParse(maxPriceController.text);
                 controller.filter.add(filter);
+                FocusScope.of(context).unfocus();
                 Navigator.of(context).pop();
               },
             ),

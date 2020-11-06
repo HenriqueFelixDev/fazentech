@@ -84,6 +84,10 @@ class _CartScreenState extends State<CartScreen> {
             return Center(child: CircularProgressIndicator());
           }
 
+          if(!snapshot.hasData) {
+            return Center(child: Text('Nenhum produto no carrinho'));
+          }
+
           final cart = snapshot.data;
 
           return ListView(
