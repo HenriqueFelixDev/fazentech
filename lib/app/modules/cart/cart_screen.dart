@@ -1,4 +1,5 @@
 import 'package:fazentech/app/modules/cart/cart_controller.dart';
+import 'package:fazentech/app/shared/controllers/user_store.dart';
 import 'package:fazentech/app/shared/models/order/order.dart';
 import 'package:fazentech/app/shared/repositories/order/order_repository_api.dart';
 import 'package:fazentech/app/shared/repositories/product/category_repository_api.dart';
@@ -8,6 +9,8 @@ import 'package:fazentech/app/modules/cart/components/cart_list_tile_widget.dart
 import 'package:fazentech/app/shared/components/custom_app_bar_widget.dart';
 import 'package:fazentech/app/shared/components/result_details_item.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:mobx/mobx.dart';
 
 class CartScreen extends StatefulWidget {
   @override
@@ -16,12 +19,20 @@ class CartScreen extends StatefulWidget {
 
 class _CartScreenState extends State<CartScreen> {
   final controller = CartController(OrderRepositoryAPI(ProductRepositoryAPI(CategoryRepositoryAPI())));
+  final userController = Modular.get<UserStore>();
 
+  bool isLoggedIn = true;
+  
   @override
   void initState() {
     super.initState();
     controller.searchCart();
+
+    autorun((_) {
+      setState(() => isLoggedIn = userController.user != null);
+    });
   }
+
   Widget _shippingChooser() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -67,17 +78,39 @@ class _CartScreenState extends State<CartScreen> {
     );
   }
 
+  Widget _unloggedScreen() {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text(
+          'Faça login para acessar seu carrinho de compras',
+          style: Theme.of(context).textTheme.headline2,
+          textAlign: TextAlign.center,
+        ),
+        Container(
+          margin: const EdgeInsets.only(top: 32.0),
+          height: 200.0,
+          child: SvgPicture.asset('assets/img/account.svg')
+        )
+      ]
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBarWidget(
         titleText: 'Carrinho'
       ),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.check, size: 28.0, color: Colors.white),
-        onPressed: () => Modular.to.pushNamed('/checkout/methods'),
-      ),
-      body: StreamBuilder<Order>(
+      floatingActionButton: isLoggedIn
+        ? FloatingActionButton(
+            child: Icon(Icons.check, size: 28.0, color: Colors.white),
+            onPressed: () => Modular.to.pushNamed('/checkout/methods'),
+          )
+        : null,
+      body: !isLoggedIn
+        ? _unloggedScreen()
+        : StreamBuilder<Order>(
         stream: controller.cart,
         builder: (context, snapshot) {
           if(snapshot.connectionState == ConnectionState.none || snapshot.connectionState == ConnectionState.waiting) {

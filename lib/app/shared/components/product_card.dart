@@ -1,13 +1,17 @@
 import 'package:fazentech/app/modules/cart/cart_controller.dart';
 import 'package:fazentech/app/shared/components/image_loading_placeholder_widget.dart';
+import 'package:fazentech/app/shared/controllers/user_store.dart';
 import 'package:fazentech/app/shared/models/product/product.dart';
 import 'package:fazentech/app/shared/theme/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:octo_image/octo_image.dart';
 
 class ProductCard extends StatelessWidget {
+  final userController = Modular.get<UserStore>();
+
   final Product product;
   final Function onCartPressed;
   final Function onTap;
@@ -32,51 +36,81 @@ class ProductCard extends StatelessWidget {
           fontWeight: FontWeight.bold
         )
       ),
-      IconButton(
-        icon: Icon(
-          FontAwesomeIcons.cartPlus, 
-          color: ColorsSet.accentColor,
-          size: 22.0
-        ),
-        onPressed: () async{
-          final quantity = await showDialog(
-            context: context,
-            builder: (context) {
-              return AlertDialog(
-                title: Text('Quantidade de Produtos'),
-                content: Row(
-                  children: [
-                    Text('Quantidade'),
-                    SizedBox(width: 16.0),
-                    Expanded(
-                      child: TextFormField(
-                        textAlign: TextAlign.center,
-                        keyboardType: TextInputType.number,
-                        controller: _quantityController,
-                      ),
-                    )
-                  ]
-                ),
-                actions: [
-                  FlatButton(
-                    child: Text('Confirmar'),
-                    onPressed: () => Navigator.of(context).pop(int.tryParse(_quantityController.text))
-                  ),
-                  FlatButton(
-                    child: Text('Cancelar'),
-                    onPressed: () => Navigator.of(context).pop(null)
-                  ),
-                ]
-              );
-            }
+      Observer(
+        builder: (context) {
+          final isLoggedIn = userController.user != null;
+
+          return IconButton(
+            icon: Icon(
+              FontAwesomeIcons.cartPlus, 
+              color: ColorsSet.accentColor,
+              size: 22.0
+            ),
+            onPressed: () => onAddCartPressed(context, isLoggedIn: isLoggedIn)
           );
-          if(quantity != null && quantity > 0) {
-            Modular.get<CartController>().insertProductOnCart(product, quantity);
-            onCartPressed?.call();
-          }
-        },
+        }
       )
     ];
+  }
+
+  Widget getCartQuantityAlert(BuildContext context) {
+    return AlertDialog(
+          title: Text('Quantidade de Produtos'),
+          content: Row(
+            children: [
+              Text('Quantidade'),
+              SizedBox(width: 16.0),
+              Expanded(
+                child: TextFormField(
+                  textAlign: TextAlign.center,
+                  keyboardType: TextInputType.number,
+                  controller: _quantityController,
+                ),
+              )
+            ]
+          ),
+          actions: [
+            FlatButton(
+              child: Text('Confirmar'),
+              onPressed: () => Navigator.of(context).pop(int.tryParse(_quantityController.text))
+            ),
+            FlatButton(
+              child: Text('Cancelar'),
+              onPressed: () => Navigator.of(context).pop(null)
+            ),
+          ]
+        );
+  }
+
+  Widget getUserUnloggedAlert(BuildContext context) {
+    return AlertDialog(
+      title: Text('Você não está logado'),
+      content: Text('Você deve estar logado para adicionar um produto ao carrinho'),
+      actions: [
+        FlatButton(
+          child: Text('OK'),
+          onPressed: () => Navigator.of(context).pop()
+        )
+      ]
+    );
+  }
+
+  void onAddCartPressed(BuildContext context, {bool isLoggedIn = true}) async{
+    final quantity = await showDialog(
+      context: context,
+      builder: (context) {
+        return isLoggedIn
+          ? getCartQuantityAlert(context)
+          : getUserUnloggedAlert(context);
+      }
+    );
+
+    if(!isLoggedIn) return;
+
+    if(quantity != null && quantity > 0) {
+      Modular.get<CartController>().insertProductOnCart(product, quantity);
+      onCartPressed?.call();
+    }
   }
 
   Widget _getProductTitle(BuildContext context) {

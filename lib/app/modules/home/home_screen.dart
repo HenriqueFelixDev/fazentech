@@ -3,10 +3,12 @@ import 'package:fazentech/app/modules/home/components/product_home_section.dart'
 import 'package:fazentech/app/modules/home/home_controller.dart';
 import 'package:fazentech/app/shared/components/custom_app_bar_widget.dart';
 import 'package:fazentech/app/shared/controllers/user_controller.dart';
+import 'package:fazentech/app/shared/controllers/user_store.dart';
 import 'package:fazentech/app/shared/models/user/user_model.dart';
 import 'package:fazentech/app/shared/repositories/product/category_repository_api.dart';
 import 'package:fazentech/app/shared/repositories/product/product_repository_api.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 enum MenuButtons {
@@ -20,7 +22,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final userController = Modular.get<UserController>();
+  final userController = Modular.get<UserStore>();
   final controller = HomeController(ProductRepositoryAPI(CategoryRepositoryAPI()));
 
   @override
@@ -46,20 +48,17 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<UserModel>(
-      stream: userController.user,
-      builder: (context, snapshot) {
-        if(snapshot.connectionState == ConnectionState.waiting || snapshot.connectionState == ConnectionState.none) {
+    return Observer(
+      builder: (context) {
+        if(userController.isLoading) {
           return Center(child: CircularProgressIndicator());
         }
-
-        final user = snapshot.data;
 
         return Scaffold(
           appBar: CustomAppBarWidget(
             titleText: 'FazenTech',
             actions: [
-              if(user != null) _avatarMenu(user)
+              if(userController.user != null) _avatarMenu(userController.user)
               else _signInButton()
             ]
           ),
@@ -99,6 +98,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ],
           )
         );
+
       }
     );
   }

@@ -7,6 +7,7 @@ import 'package:fazentech/app/modules/order/order_module.dart';
 import 'package:fazentech/app/modules/product/submodules/product/product_screen.dart';
 import 'package:fazentech/app/modules/splash/splash_screen.dart';
 import 'package:fazentech/app/shared/controllers/user_controller.dart';
+import 'package:fazentech/app/shared/controllers/user_store.dart';
 import 'package:fazentech/app/shared/repositories/auth/auth_repository_firebase.dart';
 import 'package:fazentech/app/shared/repositories/auth/auth_repository_interface.dart';
 import 'package:fazentech/app/shared/repositories/order/order_repository_api.dart';
@@ -34,7 +35,7 @@ class AppModule extends MainModule {
     Bind<IProductRepository>((i) => ProductRepositoryAPI(i.get())),
     Bind<IOrderRepository>((i) => OrderRepositoryAPI(i.get())),
     Bind((i) => CartController(i.get())),
-    Bind((i) => UserController(i.get(), i.get()))
+    Bind((i) => UserStore(i.get(), i.get()))
   ];
 
   @override

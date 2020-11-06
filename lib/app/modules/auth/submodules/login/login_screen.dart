@@ -4,9 +4,11 @@ import 'package:fazentech/app/modules/auth/components/bottom_login_painter.dart'
 import 'package:fazentech/app/modules/auth/submodules/login/login_controller.dart';
 import 'package:fazentech/app/shared/components/form/custom_text_form_field_widget.dart';
 import 'package:fazentech/app/shared/controllers/user_controller.dart';
+import 'package:fazentech/app/shared/controllers/user_store.dart';
 import 'package:fazentech/app/shared/theme/assets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:mobx/mobx.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -14,15 +16,16 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final userController = Modular.get<UserController>();
+  final userController = Modular.get<UserStore>();
   final loginController = LoginController();
 
-  StreamSubscription userSubscription;
+  ReactionDisposer userDisposer;
+
   @override
   void initState() {
     super.initState();
-    userSubscription = userController.user.listen((user) {
-      if(user != null) {
+    userDisposer = autorun((_) {
+      if(userController.user != null) {
         Modular.to.pushReplacementNamed('/main');
       }
     });
@@ -30,7 +33,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   void dispose() {
-    userSubscription.cancel();
+    userDisposer();
     super.dispose();
   }
 
