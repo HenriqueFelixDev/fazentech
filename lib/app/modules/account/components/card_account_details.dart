@@ -41,13 +41,7 @@ class CardAccountDetails extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(title, style: textTheme.headline3),
-              SizedBox(width: 4.0),
-              RaisedButton.icon(
-                shape: StadiumBorder(),
-                icon: Icon(Icons.edit, size: 16.0),
-                label: Text('Editar', style: textTheme.subtitle1),
-                onPressed: onEditPressed,
-              )
+              SizedBox(width: 4.0)
             ],
           ),
           SizedBox(height: 8.0),

@@ -1,16 +1,13 @@
 import 'dart:io';
 
 import 'package:fazentech/app/shared/controllers/user_controller.dart';
+import 'package:fazentech/app/shared/controllers/user_store.dart';
 import 'package:fazentech/app/shared/models/user/user_model.dart';
-import 'package:fazentech/app/shared/repositories/auth/auth_repository_interface.dart';
-import 'package:fazentech/app/shared/repositories/user/user_repository_firebase.dart';
-import 'package:fazentech/app/shared/repositories/user/user_repository_interface.dart';
-import 'package:fazentech/app/shared/services/image_upload_firebase_storage.dart';
 import 'package:fazentech/app/shared/services/image_upload_service_interface.dart';
 import 'package:image_picker/image_picker.dart';
 
 class AccountController {
-  UserController _userController;
+  UserStore _userController;
   IImageUploadService _imageUploadService;
   ImagePicker _imagePicker;
 

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:image_picker/image_picker.dart';
 
 class AccountHeaderWidget extends StatelessWidget {
@@ -103,23 +104,35 @@ class AccountHeaderWidget extends StatelessWidget {
         ),
         padding: const EdgeInsets.all(24.0),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            CircleAvatar(
-              radius: 60.0,
-              backgroundColor: Colors.grey[300],
-              backgroundImage: profileImage,
-              child: _takePhotoButton(context)
+            Container(
+              alignment: Alignment.topLeft,
+              child: IconButton(
+                icon: Icon(Icons.arrow_back),
+                onPressed: () => Modular.to.pop(),
+              ),
             ),
-            SizedBox(height: 8.0),
-            Text(name, style: textTheme.headline2),
-            Text(email, style: TextStyle(color: Colors.white, shadows: [
-              Shadow(
-                color: Colors.black,
-                offset: Offset(2.0, 2.0),
-                blurRadius: 10.0
-              )
-            ]),)
-          ],
+            Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                CircleAvatar(
+                  radius: 60.0,
+                  backgroundColor: Colors.grey[300],
+                  backgroundImage: profileImage
+                ),
+                SizedBox(height: 8.0),
+                Text(name, style: textTheme.headline2),
+                Text(email, style: TextStyle(color: Colors.white, shadows: [
+                  Shadow(
+                    color: Colors.black,
+                    offset: Offset(2.0, 2.0),
+                    blurRadius: 10.0
+                  )
+                ]),)
+              ],
+            )
+          ]
         )
       )
     );
