@@ -2,7 +2,6 @@ import 'package:fazentech/app/modules/product/submodules/categories/categories_c
 import 'package:fazentech/app/modules/product/submodules/categories/components/category_tile_widget.dart';
 import 'package:fazentech/app/shared/components/custom_app_bar_widget.dart';
 import 'package:fazentech/app/shared/models/product/category.dart';
-import 'package:fazentech/app/shared/repositories/product/category_repository_firebase.dart';
 import 'package:fazentech/app/shared/theme/text_styles.dart';
 import 'package:flutter/material.dart';
 

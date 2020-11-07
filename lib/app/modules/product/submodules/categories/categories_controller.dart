@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:fazentech/app/shared/models/product/category.dart';
 import 'package:fazentech/app/shared/repositories/product/category_repository_api.dart';
-import 'package:fazentech/app/shared/repositories/product/category_repository_firebase.dart';
 import 'package:fazentech/app/shared/repositories/product/category_repository_interface.dart';
 
 class CategoriesController {
