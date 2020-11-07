@@ -1,3 +1,5 @@
+import 'package:fazentech/app/exceptions/invalid_parameters_exception.dart';
+import 'package:fazentech/app/shared/models/parameter_error_model.dart';
 import 'package:fazentech/app/shared/services/http/http_client_interface.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'dart:convert';
@@ -32,7 +34,18 @@ class UserRepositoryAPI implements IUserRepository {
       await httpClient.post(
         '/user',
         headers: {'Content-Type': 'application/json'},
-        body: json.encode(user.toMap())
+        body: json.encode(user.toMap()),
+        onError: (code, body) {
+          if(code == 400) {
+            final error = json.decode(body)['error'];
+            throw InvalidParametersException(
+              'Alguns campos estão com valores incorretos',
+              error['errors'].map<ParameterErrorModel>(
+                (errorMap) => ParameterErrorModel.fromMap(errorMap)
+              ).toList()
+            );
+          }
+        }
       );
     }
   

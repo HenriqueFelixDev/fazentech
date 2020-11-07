@@ -23,7 +23,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final userController = Modular.get<UserStore>();
-  final controller = HomeController(ProductRepositoryAPI(CategoryRepositoryAPI()));
+  final controller = HomeController(ProductRepositoryAPI());
 
   @override
   void initState() {

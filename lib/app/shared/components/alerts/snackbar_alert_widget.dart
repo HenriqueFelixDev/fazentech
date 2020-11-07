@@ -54,7 +54,7 @@ class SnackbarAlertWidget extends SnackBar {
       Key key,
       @required this.message,
       @required this.type,
-      this.duration = const Duration(seconds: 2),
+      this.duration = const Duration(seconds: 5),
       this.action
     }) : super(
       key: key, 
@@ -62,6 +62,7 @@ class SnackbarAlertWidget extends SnackBar {
       content: Row(
         children: [
           if(_getIcon(type) != null) Icon(_getIcon(type)),
+          SizedBox(width: 8.0),
           Text(
             message, 
             style: TextStyle(

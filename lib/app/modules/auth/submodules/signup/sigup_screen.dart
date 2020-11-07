@@ -21,8 +21,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
     });
   }
 
-  void _goToAddressSignupScreen() {
-    Modular.link.pushNamed('/address');
+  void _goToAddressSignupScreen() async{
+    await Modular.link.pushNamed('/address');
+    setState((){});
   }
   
   @override
@@ -44,35 +45,41 @@ class _SignUpScreenState extends State<SignUpScreen> {
             label: 'Nome',
             focusNode: signupController.nameNode,
             textInputAction: TextInputAction.next,
+            errorMessage: signupController.nameError,
             controller: signupController.nameController
           ),
           CustomTextFormField(
             label: 'E-mail',
             textInputAction: TextInputAction.next,
             controller: signupController.emailController,
+            errorMessage: signupController.emailError,
             keyboardType: TextInputType.emailAddress,
           ),
           CustomTextFormField(
             label: 'Senha',
             textInputAction: TextInputAction.next,
+            errorMessage: signupController.passwordError,
             controller: signupController.passwordController,
             obscureText: true
           ),
           CustomTextFormField(
             label: 'CPF',
             textInputAction: TextInputAction.next,
+            errorMessage: signupController.cpfError,
             controller: signupController.cpfController,
             keyboardType: TextInputType.number
           ),
           CustomTextFormField(
             label: 'RG',
             textInputAction: TextInputAction.next,
+            errorMessage: signupController.rgError,
             controller: signupController.rgController,
             keyboardType: TextInputType.number
           ),
           CustomTextFormField(
             label: 'Nascimento',
             textInputAction: TextInputAction.next,
+            errorMessage: signupController.birthdayError,
             controller: signupController.birthdayController,
             keyboardType: TextInputType.datetime
           ),
@@ -88,6 +95,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 child: CustomTextFormField(
                   label: 'DDD',
                   textInputAction: TextInputAction.next,
+                  errorMessage: signupController.phoneDDDError,
                   controller: signupController.phoneDDDController,
                   keyboardType: TextInputType.phone
                 ),
@@ -96,6 +104,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 child: CustomTextFormField(
                   label: 'Número',
                   textInputAction: TextInputAction.next,
+                  errorMessage: signupController.phoneNumberError,
                   controller: signupController.phoneNumberController,
                   keyboardType: TextInputType.phone
                 ),
@@ -114,6 +123,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 child: CustomTextFormField(
                   label: 'DDD',
                   textInputAction: TextInputAction.next,
+                  errorMessage: signupController.cellphoneDDDError,
                   controller: signupController.cellphoneDDDController,
                   keyboardType: TextInputType.phone
                 ),
@@ -123,6 +133,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   label: 'Número',
                   textInputAction: TextInputAction.done,
                   onEditingComplete: _goToAddressSignupScreen,
+                  errorMessage: signupController.cellphoneNumberError,
                   controller: signupController.cellphoneNumberController,
                   keyboardType: TextInputType.phone
                 ),

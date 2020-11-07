@@ -32,8 +32,8 @@ class AppModule extends MainModule {
     Bind<IUserRepository>((i) => UserRepositoryAPI()),
     Bind<IAuthRepository>((i) => AuthRepositoryFirebase()),
     Bind<ICategoryRepository>((i) => CategoryRepositoryAPI()),
-    Bind<IProductRepository>((i) => ProductRepositoryAPI(i.get())),
-    Bind<IOrderRepository>((i) => OrderRepositoryAPI(i.get())),
+    Bind<IProductRepository>((i) => ProductRepositoryAPI()),
+    Bind<IOrderRepository>((i) => OrderRepositoryAPI()),
     Bind((i) => CartController(i.get())),
     Bind((i) => UserStore(i.get(), i.get()))
   ];

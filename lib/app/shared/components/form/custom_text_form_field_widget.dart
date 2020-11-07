@@ -10,6 +10,7 @@ class CustomTextFormField extends StatelessWidget {
   final FocusNode focusNode;
   final TextInputAction textInputAction;
   final Function onEditingComplete;
+  final String errorMessage;
 
   CustomTextFormField({
     Key key,
@@ -20,7 +21,8 @@ class CustomTextFormField extends StatelessWidget {
     this.margin = 16.0,
     this.focusNode,
     this.textInputAction,
-    this.onEditingComplete
+    this.onEditingComplete,
+    this.errorMessage
   }) : super(key: key);
 
 
@@ -37,6 +39,7 @@ class CustomTextFormField extends StatelessWidget {
         onEditingComplete: onEditingComplete,
         decoration: InputDecoration(
           labelText: label,
+          errorText: errorMessage,
           border: OutlineInputBorder()
         )
       ),

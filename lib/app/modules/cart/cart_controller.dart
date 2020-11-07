@@ -9,7 +9,7 @@ class CartController {
   CartController(this._orderRepository);
 
   Order _cart;
-  List<OrderProduct> _cartProducts;
+  List<OrderProduct> _cartProducts = [];
   final _cartSubject = BehaviorSubject<Order>();
   Stream<Order> get cart => _cartSubject.stream;
 

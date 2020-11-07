@@ -1,8 +1,11 @@
+import 'package:fazentech/app/exceptions/invalid_parameters_exception.dart';
 import 'package:fazentech/app/modules/auth/submodules/signup/signup_controller.dart';
 import 'package:fazentech/app/shared/components/alerts/snackbar_alert_widget.dart';
 import 'package:fazentech/app/shared/components/custom_app_bar_widget.dart';
 import 'package:fazentech/app/shared/components/form/custom_text_form_field_widget.dart';
+import 'package:fazentech/app/shared/components/loading_dialog_widget.dart';
 import 'package:fazentech/app/shared/controllers/user_controller.dart';
+import 'package:fazentech/app/shared/controllers/user_store.dart';
 import 'package:fazentech/app/shared/models/user/address.dart';
 import 'package:fazentech/app/shared/models/user/address_state.dart';
 import 'package:fazentech/app/shared/models/user/phone.dart';
@@ -17,7 +20,9 @@ class SignUpAddressScreen extends StatefulWidget {
 
 class _SignUpAddressScreenState extends State<SignUpAddressScreen> {
   final signupController = Modular.get<SignupController>();
-  final userController = Modular.get<UserController>();
+  final userController = Modular.get<UserStore>();
+
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
@@ -28,14 +33,25 @@ class _SignUpAddressScreenState extends State<SignUpAddressScreen> {
   }
 
   Future<void> _signUp() async{
-    showSignUpWaitingModal(context);
-    await signupController.signUp();
-    Modular.to.popUntil(ModalRoute.withName('/auth'));
+      FocusScope.of(context).unfocus();
+      showSignUpWaitingModal(context);
+      bool result = await signupController.signUp();
+      if(result) {
+        Modular.to.popUntil(ModalRoute.withName('/auth'));
+      } else {
+        await Future.delayed(Duration(milliseconds: 500));
+        Navigator.of(context).pop();
+        _scaffoldKey.currentState.showSnackBar(
+          SnackbarAlertWidget(message: signupController.error, type: AlertType.ERROR)
+        );
+        setState((){});
+      }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       appBar: CustomAppBarWidget(
         titleText: 'Endereço',
         actions: [
@@ -52,12 +68,14 @@ class _SignUpAddressScreenState extends State<SignUpAddressScreen> {
             label: 'Rua',
             focusNode: signupController.streetNode,
             textInputAction: TextInputAction.next,
+            errorMessage: signupController.streetError,
             controller: signupController.streetController
           ),
 
           CustomTextFormField(
             label: 'Número',
             textInputAction: TextInputAction.next,
+            errorMessage: signupController.numberError,
             controller: signupController.numberController,
             keyboardType: TextInputType.number,
           ),
@@ -65,6 +83,7 @@ class _SignUpAddressScreenState extends State<SignUpAddressScreen> {
           CustomTextFormField(
             label: 'Bairro',
             textInputAction: TextInputAction.next,
+            errorMessage: signupController.neighborhoodError,
             controller: signupController.neighborhoodController,
             obscureText: true
           ),
@@ -72,6 +91,7 @@ class _SignUpAddressScreenState extends State<SignUpAddressScreen> {
           CustomTextFormField(
             label: 'CEP',
             textInputAction: TextInputAction.next,
+            errorMessage: signupController.postalCodeError,
             controller: signupController.postalCodeController,
             keyboardType: TextInputType.streetAddress
           ),
@@ -79,6 +99,7 @@ class _SignUpAddressScreenState extends State<SignUpAddressScreen> {
           CustomTextFormField(
             label: 'Cidade',
             textInputAction: TextInputAction.next,
+            errorMessage: signupController.cityError,
             controller: signupController.cityController
           ),
 
@@ -88,6 +109,7 @@ class _SignUpAddressScreenState extends State<SignUpAddressScreen> {
           ),
           DropdownButtonFormField<AddressState>(
             decoration: InputDecoration(
+              errorText: signupController.stateError,
               border: OutlineInputBorder()
             ),
             value: signupController.state,
@@ -106,6 +128,7 @@ class _SignUpAddressScreenState extends State<SignUpAddressScreen> {
             label: 'Complemento',
             textInputAction: TextInputAction.done,
             onEditingComplete: _signUp,
+            errorMessage: signupController.complementError,
             controller: signupController.complementController,
             keyboardType: TextInputType.phone
           )
@@ -118,18 +141,7 @@ class _SignUpAddressScreenState extends State<SignUpAddressScreen> {
     showDialog(
       context: context,
       barrierDismissible: false,
-      builder: (_) {
-        return AlertDialog(
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text('Cadastrando usuário...'),
-              SizedBox(height: 8.0),
-              CircularProgressIndicator()
-            ]
-          )
-        );
-      }
+      builder: (_) => LoadingDialogWidget(message: 'Cadastrando usuário...')
     );
   }
 }

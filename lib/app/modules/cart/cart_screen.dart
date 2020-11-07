@@ -2,8 +2,6 @@ import 'package:fazentech/app/modules/cart/cart_controller.dart';
 import 'package:fazentech/app/shared/controllers/user_store.dart';
 import 'package:fazentech/app/shared/models/order/order.dart';
 import 'package:fazentech/app/shared/repositories/order/order_repository_api.dart';
-import 'package:fazentech/app/shared/repositories/product/category_repository_api.dart';
-import 'package:fazentech/app/shared/repositories/product/product_repository_api.dart';
 import 'package:flutter/material.dart';
 import 'package:fazentech/app/modules/cart/components/cart_list_tile_widget.dart';
 import 'package:fazentech/app/shared/components/custom_app_bar_widget.dart';
@@ -18,7 +16,7 @@ class CartScreen extends StatefulWidget {
 }
 
 class _CartScreenState extends State<CartScreen> {
-  final controller = CartController(OrderRepositoryAPI(ProductRepositoryAPI(CategoryRepositoryAPI())));
+  final controller = CartController(OrderRepositoryAPI());
   final userController = Modular.get<UserStore>();
 
   bool isLoggedIn = true;

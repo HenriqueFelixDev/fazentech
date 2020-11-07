@@ -2,7 +2,9 @@ import 'dart:async';
 
 import 'package:fazentech/app/modules/auth/components/bottom_login_painter.dart';
 import 'package:fazentech/app/modules/auth/submodules/login/login_controller.dart';
+import 'package:fazentech/app/shared/components/alerts/snackbar_alert_widget.dart';
 import 'package:fazentech/app/shared/components/form/custom_text_form_field_widget.dart';
+import 'package:fazentech/app/shared/components/loading_dialog_widget.dart';
 import 'package:fazentech/app/shared/controllers/user_controller.dart';
 import 'package:fazentech/app/shared/controllers/user_store.dart';
 import 'package:fazentech/app/shared/theme/assets.dart';
@@ -21,6 +23,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
   ReactionDisposer userDisposer;
 
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
+
   @override
   void initState() {
     super.initState();
@@ -29,6 +33,12 @@ class _LoginScreenState extends State<LoginScreen> {
         Modular.to.pushReplacementNamed('/main');
       }
     });
+
+    loginController.onError = (error) {
+      _scaffoldKey.currentState.showSnackBar(
+        SnackbarAlertWidget(message: error, type: AlertType.ERROR)
+      );
+    };
   }
 
   @override
@@ -40,6 +50,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: CustomPaint(
@@ -56,60 +67,59 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
           child: Container(
             child: ListView(
-                  children: [
-                    Container(
-                      padding: const EdgeInsets.all(24.0),
-                      constraints: BoxConstraints(
-                        minHeight: MediaQuery.of(context).size.height * 0.66
+              children: [
+                Container(
+                  padding: const EdgeInsets.all(24.0),
+                  constraints: BoxConstraints(
+                    minHeight: MediaQuery.of(context).size.height * 0.66
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Container(
+                        height: 120.0,
+                        margin: const EdgeInsets.symmetric(vertical: 32.0),
+                        child: Image.asset(AssetsSet.appLogo)
                       ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                      CustomTextFormField(
+                        label: 'E-mail', 
+                        controller: loginController.emailController,
+                        keyboardType: TextInputType.emailAddress,
+                        obscureText: false
+                      ),
+                      CustomTextFormField(
+                        label: 'Senha', 
+                        controller: loginController.passwordController,
+                        obscureText: true
+                      ),
+                      Container(
+                        height: 50.0,
+                        child: MaterialButton(
+                          color: Theme.of(context).accentColor,
+                          colorBrightness: Brightness.dark,
+                          child: Text('Entrar'),
+                          onPressed: _login,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Container(
+                  margin: const EdgeInsets.only(top: 50.0),
+                  alignment: Alignment.bottomCenter,
+                  child: Column(
+                        mainAxisSize: MainAxisSize.min,
                         children: [
-                          Container(
-                            height: 120.0,
-                            margin: const EdgeInsets.symmetric(vertical: 32.0),
-                            child: Image.asset(AssetsSet.appLogo)
-                          ),
-                          CustomTextFormField(
-                            label: 'E-mail', 
-                            controller: loginController.emailController,
-                            keyboardType: TextInputType.emailAddress,
-                            obscureText: false
-                          ),
-                          CustomTextFormField(
-                            label: 'Senha', 
-                            controller: loginController.passwordController,
-                            obscureText: true
-                          ),
-                          Container(
-                            height: 50.0,
-                            child: MaterialButton(
-                              color: Theme.of(context).accentColor,
-                              colorBrightness: Brightness.dark,
-                              child: Text('Entrar'),
-                              onPressed: _login,
-                            ),
-                          ),
+                          Text('Não possui cadastro?', style: TextStyle(fontSize: 18.0, color: Colors.white)),
+                          GestureDetector(
+                            onTap: () => Modular.to.pushNamed('/auth/signup'),
+                            child: Text('Criar nova conta', style: TextStyle(fontSize: 20.0, color: Theme.of(context).accentColor))
+                          )
                         ],
                       ),
-                    ),
-                    Container(
-                      margin: const EdgeInsets.only(top: 50.0),
-                      alignment: Alignment.bottomCenter,
-                      child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Text('Não possui cadastro?', style: TextStyle(fontSize: 18.0, color: Colors.white)),
-                              GestureDetector(
-                                onTap: () => Modular.to.pushNamed('/auth/signup'),
-                                child: Text('Criar nova conta', style: TextStyle(fontSize: 20.0, color: Theme.of(context).accentColor))
-                              )
-
-                            ],
-                          ),
-                    )
-                  ]
-                ),
+                )
+              ]
+            ),
           ),
         )
       )
@@ -117,6 +127,17 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   Future<void> _login() async{
+    FocusScope.of(context).unfocus();
+    _showLoadingDialog();
     await loginController.loginWithEmailAndPassword();
+    Navigator.of(context).pop();
+  }
+
+  _showLoadingDialog() {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (_) => LoadingDialogWidget(message: 'Realizando Login')
+    );
   }
 }

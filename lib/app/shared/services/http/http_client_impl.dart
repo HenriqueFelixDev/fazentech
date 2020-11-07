@@ -2,7 +2,7 @@ import 'http_client_interface.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-typedef HttpOnRequestCallback = Future<http.Response> Function(String url, Map<String, String> headers, Map<String, String> body);
+typedef HttpOnRequestCallback = Future<http.Response> Function(String url, Map<String, String> headers, dynamic body);
 
 class HttpClientImpl implements IHttpClient {
   @override

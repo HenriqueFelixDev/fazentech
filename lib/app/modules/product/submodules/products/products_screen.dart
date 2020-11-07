@@ -21,13 +21,12 @@ class ProductsScreen extends StatefulWidget {
 }
 
 class _ProductsScreenState extends State<ProductsScreen> {
-  final controller = ProductsController(ProductRepositoryAPI());
+  final controller = ProductsController(Modular.get(), Modular.get());
   ProductFilter filter;
 
   @override
   void initState() {
     super.initState();
-    print(widget.productFilter);
     this.filter = widget.productFilter ?? ProductFilter();
     controller.filter.add(filter);
   }

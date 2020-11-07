@@ -1,15 +1,9 @@
 import 'package:fazentech/app/modules/order/order_controller.dart';
 import 'package:fazentech/app/modules/order/screens/orders/components/order_card_widget.dart';
 import 'package:fazentech/app/shared/components/custom_app_bar_widget.dart';
-import 'package:fazentech/app/shared/components/gradient_card_widget.dart';
 import 'package:fazentech/app/shared/models/order/order.dart';
 import 'package:fazentech/app/shared/repositories/order/order_repository_api.dart';
-import 'package:fazentech/app/shared/repositories/product/category_repository_api.dart';
-import 'package:fazentech/app/shared/repositories/product/product_repository_api.dart';
-import 'package:fazentech/app/shared/repositories/product/product_repository_interface.dart';
-import 'package:fazentech/app/shared/theme/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_modular/flutter_modular.dart';
 
 class OrdersScreen extends StatefulWidget {
   @override
@@ -17,7 +11,7 @@ class OrdersScreen extends StatefulWidget {
 }
 
 class _OrdersScreenState extends State<OrdersScreen> {
-  final controller = OrderController(OrderRepositoryAPI(ProductRepositoryAPI(CategoryRepositoryAPI())));
+  final controller = OrderController(OrderRepositoryAPI());
 
   @override
   void initState() {
