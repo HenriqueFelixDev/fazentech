@@ -4,7 +4,6 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 import 'order_repository_interface.dart';
-import '../product/product_repository_interface.dart';
 import '../auth/auth_repository_interface.dart';
 import '../../models/product/product.dart';
 import '../../models/order/order_product.dart';
@@ -14,10 +13,6 @@ import '../../models/order/order.dart';
 class OrderRepositoryAPI implements IOrderRepository {
   final _authRepository = Modular.get<IAuthRepository>();
   final httpClient = Modular.get<IHttpClient>();
-  
-  @override
-  IProductRepository productRepository;
-  OrderRepositoryAPI(this.productRepository);
 
   @override
   Future<Order> getOrderById(String id) {

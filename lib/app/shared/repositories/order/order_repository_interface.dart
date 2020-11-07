@@ -5,8 +5,6 @@ import '../../models/order/order_product.dart';
 import '../../models/product/product.dart';
 
 abstract class IOrderRepository {
-  IProductRepository productRepository;
-  
   Future<void> saveOrder();
   Future<void> updateOrder(Order order);
   Future<List<Order>> getOrders(OrderFilter filter);

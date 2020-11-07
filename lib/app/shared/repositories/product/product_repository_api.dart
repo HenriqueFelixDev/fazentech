@@ -1,7 +1,6 @@
 import 'package:fazentech/app/shared/services/http/http_client_interface.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
-import 'category_repository_interface.dart';
 import '../../models/product/category.dart';
 import '../../models/order/order_product.dart';
 import '../../models/product/product.dart';
@@ -10,9 +9,7 @@ import '../../models/product/product_filter.dart';
 import 'product_repository_interface.dart';
 
 class ProductRepositoryAPI implements IProductRepository {
-  ICategoryRepository categoryRepository;
   final httpClient = Modular.get<IHttpClient>();
-  ProductRepositoryAPI(this.categoryRepository);
 
   String _buildProductsQuery(ProductFilter filter) {
     if(filter == null) {

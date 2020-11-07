@@ -21,7 +21,7 @@ class ProductsScreen extends StatefulWidget {
 }
 
 class _ProductsScreenState extends State<ProductsScreen> {
-  final controller = ProductsController(ProductRepositoryAPI(CategoryRepositoryAPI()));
+  final controller = ProductsController(ProductRepositoryAPI());
   ProductFilter filter;
 
   @override

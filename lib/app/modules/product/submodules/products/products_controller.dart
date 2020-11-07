@@ -2,12 +2,14 @@ import 'dart:async';
 
 import 'package:fazentech/app/shared/models/product/product.dart';
 import 'package:fazentech/app/shared/models/product/product_filter.dart';
+import 'package:fazentech/app/shared/repositories/product/category_repository_interface.dart';
 import 'package:fazentech/app/shared/repositories/product/product_repository_interface.dart';
 import 'package:rxdart/rxdart.dart';
 
 class ProductsController {
   IProductRepository productRepository;
-  ProductsController(this.productRepository) {
+  ICategoryRepository categoryRepository;
+  ProductsController(this.productRepository, this.categoryRepository) {
     _filterSubscription = _filterSubject.stream.listen((filter) {
       print(filter);
       searchProducts(productFilter: filter);
