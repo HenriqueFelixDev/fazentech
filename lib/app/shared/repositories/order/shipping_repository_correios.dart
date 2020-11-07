@@ -10,8 +10,8 @@ class ShippingRepositoryCorreios implements IShippingRepository {
   @override
   Future<List<Shipping>> getShippings(String cep) async{
     List<Shipping> shippings = [];
-    shippings.add(await _getShipping('SEDEX', '04014', cep));
     shippings.add(await _getShipping('PAC', '04510', cep));
+    shippings.add(await _getShipping('SEDEX', '04014', cep));
     return shippings;
   }
 

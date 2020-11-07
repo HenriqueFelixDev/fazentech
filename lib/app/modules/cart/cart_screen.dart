@@ -1,6 +1,7 @@
 import 'package:fazentech/app/modules/cart/cart_controller.dart';
 import 'package:fazentech/app/shared/controllers/user_store.dart';
 import 'package:fazentech/app/shared/models/order/order.dart';
+import 'package:fazentech/app/shared/models/order/shipping.dart';
 import 'package:fazentech/app/shared/repositories/order/order_repository_api.dart';
 import 'package:flutter/material.dart';
 import 'package:fazentech/app/modules/cart/components/cart_list_tile_widget.dart';
@@ -25,6 +26,7 @@ class _CartScreenState extends State<CartScreen> {
   void initState() {
     super.initState();
     controller.searchCart();
+    controller.searchShippings();
 
     autorun((_) {
       setState(() => isLoggedIn = userController.user != null);
@@ -32,48 +34,56 @@ class _CartScreenState extends State<CartScreen> {
   }
 
   Widget _shippingChooser() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.end,
+    return StreamBuilder<Shipping>(
+      stream: controller.selectedShipping,
+      builder: (context, snapshot) {
+        if(snapshot.connectionState == ConnectionState.none || snapshot.connectionState == ConnectionState.waiting) {
+          return Center(child: CircularProgressIndicator());
+        }
+
+        final selectedShipping = snapshot.data;
+        if(selectedShipping == null) {
+          return Container();
+        }
+
+        return ExpansionTile(
+          tilePadding: EdgeInsets.zero,
+          title: ResultDetailsItem(
+            label: 'Frete',
+            value: 'R\$ ${selectedShipping.value} (${selectedShipping.type})'
+          ),
           children: [
-            Expanded(
-              child: ResultDetailsItem(
-                label: 'Frete',
-                value: 'R\$ 5,99 (PAC)'
-              )
-            ),
-            IconButton(
-              icon: Icon(Icons.keyboard_arrow_down),
-              constraints: BoxConstraints(maxHeight: 35.0),
-              onPressed: (){},
+            StreamBuilder<List<Shipping>>(
+              stream: controller.shippings,
+              builder: (context, snapshot) {
+                if(snapshot.connectionState == ConnectionState.none || snapshot.connectionState == ConnectionState.waiting) {
+                  return Center(child: CircularProgressIndicator());
+                }
+
+                final shippings = snapshot.data;
+
+                return Container(
+                  child: Wrap(
+                    alignment: WrapAlignment.start,
+                    children: shippings.map(
+                      (shipping) => RadioListTile<Shipping>(
+                        title: Text('${shipping.type} (R\$ ${shipping.value})'),
+                        subtitle: Text('Data de chegada: ${shipping.arrivalForecast} ${shipping.arrivalForecast.difference(DateTime.now()).inDays} dia(s)'),
+                        value: shipping, 
+                        groupValue: selectedShipping,
+                        dense: true,
+                        onChanged: controller.selectShipping
+                      )
+                    ).toList()
+                  )
+                );
+              }
             )
-          ],
-        ),
-        Container(
-          child: Wrap(
-            alignment: WrapAlignment.start,
-            children: [
-              RadioListTile(
-                title: Text('PAC (R\$ 5,99)'),
-                value: null, 
-                groupValue: null,
-                dense: true,
-                onChanged: (value){}
-              ),
-              RadioListTile(
-                title: Text('Sedex (R\$ 13,99)'), 
-                value: null, 
-                groupValue: null, 
-                dense: true,
-                onChanged: (value){}
-              ),
-            ]
-          )
-        )
-      ]
+          ]
+        );
+      }
     );
+    
   }
 
   Widget _unloggedScreen() {
