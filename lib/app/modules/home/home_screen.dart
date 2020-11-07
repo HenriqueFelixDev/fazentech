@@ -106,7 +106,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget _avatarMenu(UserModel user) {
     return PopupMenuButton<MenuButtons>(
       onSelected: (selectedItem) => _onMenuItemPressed(selectedItem, user),
-      offset: Offset(0, 50.0),
+      offset: Offset(0, 20.0),
       icon:CircleAvatar(
           backgroundImage: user.photo == null 
             ? AssetImage('assets/img/avatar.png')

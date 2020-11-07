@@ -20,7 +20,6 @@ class CartListTileWidget extends StatelessWidget {
   Widget build(BuildContext context) {
 
     return Container(
-      margin: const EdgeInsets.symmetric(vertical: 8.0),
       child: GradientCardWidget(
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
