@@ -1,3 +1,4 @@
+import 'package:fazentech/app/shared/models/product/product_filter.dart';
 import 'package:flutter/material.dart';
 
 import 'modules/cart/cart_screen.dart';
@@ -14,6 +15,7 @@ class _MainScreenState extends State<MainScreen> {
   final _pageController = PageController();
 
   int _page = 0;
+  ProductFilter productFilter = ProductFilter();
 
   @override
   void initState() {
@@ -32,8 +34,13 @@ class _MainScreenState extends State<MainScreen> {
         controller: _pageController,
         children: [
           HomeScreen(),
-          ProductsScreen(),
-          CategoriesScreen(),
+          ProductsScreen(productFilter: productFilter),
+          CategoriesScreen(
+            onCategoryChoosed: (categoryId) {
+              productFilter.categories = [categoryId];
+              _moveToPage(1);
+            },
+          ),
           CartScreen()
         ],
       ),

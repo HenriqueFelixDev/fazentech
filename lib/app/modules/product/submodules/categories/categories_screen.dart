@@ -7,6 +7,12 @@ import 'package:fazentech/app/shared/theme/text_styles.dart';
 import 'package:flutter/material.dart';
 
 class CategoriesScreen extends StatefulWidget {
+  Function (int) onCategoryChoosed;
+  CategoriesScreen({
+    Key key,
+    @required this.onCategoryChoosed
+  }) : super(key: key);
+
   @override
   _CategoriesScreenState createState() => _CategoriesScreenState();
 }
@@ -60,7 +66,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
               return CategoryTileWidget(
                 category: category.name,
                 icon: category.icon,
-                onPressed: (){},
+                onPressed: () => widget.onCategoryChoosed(int.tryParse(category.id))
               );
             }
           );

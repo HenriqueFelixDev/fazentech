@@ -10,13 +10,27 @@ import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 class ProductsScreen extends StatefulWidget {
+  final ProductFilter productFilter;
+  ProductsScreen({
+    Key key,
+    this.productFilter
+  }) : super(key: key);
+
   @override
   _ProductsScreenState createState() => _ProductsScreenState();
 }
 
 class _ProductsScreenState extends State<ProductsScreen> {
   final controller = ProductsController(ProductRepositoryAPI(CategoryRepositoryAPI()));
-  ProductFilter filter = ProductFilter();
+  ProductFilter filter;
+
+  @override
+  void initState() {
+    super.initState();
+    print(widget.productFilter);
+    this.filter = widget.productFilter ?? ProductFilter();
+    controller.filter.add(filter);
+  }
 
   final searchController = TextEditingController();
   final minPriceController = TextEditingController();
