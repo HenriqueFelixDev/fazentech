@@ -33,7 +33,7 @@ class ProductOrderListTile extends StatelessWidget {
           style: textTheme.headline4,
           children: [
             TextSpan(
-              text: 'R\$ $totalPrice',
+              text: 'R\$ $productPrice',
               style: textTheme.headline3.copyWith(color: primaryColor)
             )
           ]

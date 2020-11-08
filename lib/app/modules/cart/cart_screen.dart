@@ -106,6 +106,15 @@ class _CartScreenState extends State<CartScreen> {
 
   @override
   Widget build(BuildContext context) {
+
+    if(!isLoggedIn) {
+      return Scaffold(
+        appBar: CustomAppBarWidget(
+          titleText: 'Carrinho'
+        ),
+        body: _unloggedScreen()
+      );
+    }
     return StreamBuilder<Order>(
         stream: controller.cart,
         builder: (context, snapshot) {
@@ -129,9 +138,7 @@ class _CartScreenState extends State<CartScreen> {
                   onPressed: () => Modular.to.pushNamed('/cart/checkout/methods'),
                 )
               : null,
-            body:  !isLoggedIn
-              ? _unloggedScreen()
-              : ListView(
+            body: ListView(
               padding: const EdgeInsets.all(24.0),
               children: [
                 _shippingChooser(),

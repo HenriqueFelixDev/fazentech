@@ -1,4 +1,4 @@
-import 'package:fazentech/app/exceptions/invalid_parameters_exception.dart';
+import 'package:fazentech/app/shared/exceptions/invalid_parameters_exception.dart';
 import 'package:fazentech/app/shared/models/parameter_error_model.dart';
 import 'package:fazentech/app/shared/services/http/http_client_interface.dart';
 import 'package:flutter_modular/flutter_modular.dart';

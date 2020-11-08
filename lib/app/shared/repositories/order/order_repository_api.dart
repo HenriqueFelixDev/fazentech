@@ -1,6 +1,5 @@
 import 'package:fazentech/app/shared/services/http/http_client_interface.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 import 'order_repository_interface.dart';

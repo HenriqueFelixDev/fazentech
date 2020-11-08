@@ -26,12 +26,7 @@ class ProductHomeSection extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(title, style: textTheme.headline3,),
-              FlatButton(
-                padding: EdgeInsets.zero,
-                child: Text('Ver Mais >>', style: textTheme.headline3.copyWith(color: ColorsSet.accentColor)),
-                onPressed: (){},
-              )
+              Text(title, style: textTheme.headline3,)
             ],
           ),
           Container(

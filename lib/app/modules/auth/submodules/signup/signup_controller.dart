@@ -1,4 +1,4 @@
-import 'package:fazentech/app/exceptions/invalid_parameters_exception.dart';
+import 'package:fazentech/app/shared/exceptions/invalid_parameters_exception.dart';
 import 'package:fazentech/app/shared/controllers/user_controller.dart';
 import 'package:fazentech/app/shared/controllers/user_store.dart';
 import 'package:fazentech/app/shared/models/user/address.dart';

@@ -1,5 +1,5 @@
-import 'package:fazentech/app/exceptions/authentication_exception.dart';
-import 'package:fazentech/app/exceptions/default_exception.dart';
+import 'package:fazentech/app/shared/exceptions/authentication_exception.dart';
+import 'package:fazentech/app/shared/exceptions/default_exception.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import 'auth_repository_interface.dart';

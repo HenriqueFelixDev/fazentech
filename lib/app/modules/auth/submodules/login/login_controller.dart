@@ -1,4 +1,4 @@
-import 'package:fazentech/app/exceptions/authentication_exception.dart';
+import 'package:fazentech/app/shared/exceptions/authentication_exception.dart';
 import 'package:fazentech/app/shared/controllers/user_store.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_modular/flutter_modular.dart';

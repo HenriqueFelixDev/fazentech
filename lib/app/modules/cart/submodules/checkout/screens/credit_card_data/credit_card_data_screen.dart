@@ -84,7 +84,7 @@ class _CreditCardDataScreenState extends State<CreditCardDataScreen> {
                     (index) {
                       index++;
                       return DropdownMenuItem(
-                        child: Text('${index}x R\$${(cartPrice / index).toStringAsFixed(2)}}'),
+                        child: Text('${index}x R\$${(cartPrice / index).toStringAsFixed(2)}'),
                         onTap: () {
                           controller.updateCart(installmentCount: index);
                         },

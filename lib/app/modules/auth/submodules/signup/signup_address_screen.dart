@@ -1,4 +1,4 @@
-import 'package:fazentech/app/exceptions/invalid_parameters_exception.dart';
+import 'package:fazentech/app/shared/exceptions/invalid_parameters_exception.dart';
 import 'package:fazentech/app/modules/auth/submodules/signup/signup_controller.dart';
 import 'package:fazentech/app/shared/components/alerts/snackbar_alert_widget.dart';
 import 'package:fazentech/app/shared/components/custom_app_bar_widget.dart';

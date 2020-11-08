@@ -1,4 +1,4 @@
-import 'package:fazentech/app/exceptions/default_exception.dart';
+import 'package:fazentech/app/shared/exceptions/default_exception.dart';
 import 'package:fazentech/app/shared/models/parameter_error_model.dart';
 
 class InvalidParametersException extends DefaultException{
