@@ -23,9 +23,8 @@ class _CreditCardDataScreenState extends State<CreditCardDataScreen> {
   void initState() {
     super.initState();
     controller.cart.last.then((cart) {
-      print(cart);
       updatePaymentInfo(cart.installmentCount, cart.total);
-    }, onError: (e) => print('ERROR: $e'));
+    });
   }
 
   void updatePaymentInfo(int installmentCount, double cartPrice) {

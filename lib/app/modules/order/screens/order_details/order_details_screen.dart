@@ -57,7 +57,9 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Icon(Icons.circle),
-                    Text('${order.status}')
+                    Expanded(
+                      child: Text('${order.status}')
+                    )
                   ],
                 ),
               )

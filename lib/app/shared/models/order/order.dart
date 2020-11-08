@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/foundation.dart';
 
+import 'payment_method.dart';
 import 'order_product.dart';
 import 'order_status.dart';
 
@@ -8,7 +9,7 @@ class Order {
   String id;
   DateTime createdIn;
   List<OrderProduct> products;
-  String paymentMethod;
+  PaymentMethod paymentMethod;
   int installmentCount;
   String shipping;
   OrderStatus status;
@@ -18,12 +19,14 @@ class Order {
     this.id,
     this.products,
     this.createdIn,
-    this.paymentMethod,
+    String paymentMethod,
     this.installmentCount,
     this.shipping,
     String status,
     this.total
-  }) : this.status = OrderStatus.valueOf(status);
+  }) : 
+    this.status = OrderStatus.valueOf(status),
+    this.paymentMethod = PaymentMethod.valueOf(paymentMethod);
 
   Order copyWith({
     String id,
@@ -39,7 +42,7 @@ class Order {
       id: id ?? this.id,
       createdIn: createdIn ?? this.createdIn,
       products: products ?? this.products,
-      paymentMethod: paymentMethod ?? this.paymentMethod,
+      paymentMethod: paymentMethod ?? this.paymentMethod.name,
       installmentCount: installmentCount ?? this.installmentCount,
       shipping: shipping ?? this.shipping,
       status: status ?? this.status.name,
@@ -52,7 +55,7 @@ class Order {
       'id': id,
       'created_in': createdIn?.toString(),
       'products': products?.map((x) => x?.toMap())?.toList(),
-      'paymenth_method': paymentMethod,
+      'paymenth_method': paymentMethod.name,
       'installmentCount': installmentCount,
       'shipping': shipping,
       'status': status.name,

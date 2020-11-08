@@ -14,4 +14,25 @@ class OrderStatus extends EnumClass {
 
   static BuiltSet<OrderStatus> get values => _$values;
   static OrderStatus valueOf(String name) => _$valueOf(name);
+
+  @override
+  String toString() {
+    switch(name) {
+      case 'buying':
+        return 'Comprando';
+        break;
+      case 'complete_purchase':
+        return 'Compra finalizada';
+        break;
+      case 'preparing_for_shipment':
+        return 'Preparando para envio';
+        break;
+      case 'sent':
+        return 'Enviado';
+        break;
+      case 'arrived_at_destination':
+        return 'Chegou ao destino';
+        break;
+    }
+  }
 }

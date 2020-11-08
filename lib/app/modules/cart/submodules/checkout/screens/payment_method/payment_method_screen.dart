@@ -22,7 +22,7 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
   void initState() {
     super.initState();
     _cartSubscription = controller.cart.listen((cart) {
-      setState(() => value = cart.paymentMethod);
+      setState(() => value = cart.paymentMethod.name);
     });
   }
 
