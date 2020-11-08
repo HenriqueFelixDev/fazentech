@@ -154,39 +154,6 @@ class _ProductsScreenState extends State<ProductsScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Text('Categorias'),
-                Wrap(
-                  spacing: 8.0,
-                  children: [
-                    FilterChip(
-                      selected: true,
-                      selectedColor: Theme.of(context).primaryColor.withAlpha(150),
-                      label: Text('Verduras'),
-                      onSelected: (selected){},
-                    ),
-                    FilterChip(
-                      label: Text('Verduras'),
-                      onSelected: (selected){},
-                    ),
-                    FilterChip(
-                      label: Text('Verduras'),
-                      onSelected: (selected){},
-                    ),
-                    FilterChip(
-                      label: Text('Verduras'),
-                      onSelected: (selected){},
-                    ),
-                    FilterChip(
-                      label: Text('Verduras'),
-                      onSelected: (selected){},
-                    ),
-                    FilterChip(
-                      label: Text('Verduras'),
-                      onSelected: (selected){},
-                    ),
-                  ],
-                ),
-                SizedBox(height: 16.0),
                 Text('Preço'),
                 Row(
                   children: [
