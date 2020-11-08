@@ -7,11 +7,8 @@ Aplicativo de e-commerce para o portifolio do curso de Análise e Desenvolviment
 ## Getting Started
 - [FazenTech](#fazentech)
   - [Getting Started](#getting-started)
-  - [Test](#test)
   - [Telas](#telas)
   - [Estudo de Caso](#estudo-de-caso)
-
-## Test
 
 ## Telas
 <p float="left">
