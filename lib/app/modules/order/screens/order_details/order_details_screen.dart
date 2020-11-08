@@ -38,7 +38,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                   children: [
                     Text('Forma de Pagamento', textAlign: TextAlign.center, style: titleTheme),
                     SizedBox(height: 8.0),
-                    Text('Cartão de Crédito', textAlign: TextAlign.center, style: textTheme.bodyText1.copyWith(height: 1.0))
+                    Text('${order.paymentMethod}', textAlign: TextAlign.center, style: textTheme.bodyText1.copyWith(height: 1.0))
                   ]
                 ),
               ),
@@ -47,7 +47,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                 children: [
                   Text('Parcelas', style: titleTheme),
                   SizedBox(height: 8.0),
-                  Text('3', style: textTheme.bodyText1.copyWith(height: 1.0))
+                  Text('${order.installmentCount}', style: textTheme.bodyText1.copyWith(height: 1.0))
                 ]
                 )
               ),

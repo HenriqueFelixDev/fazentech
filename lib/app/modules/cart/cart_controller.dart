@@ -58,6 +58,24 @@ class CartController {
     }
   }
 
+  Future<void> updateCart({String paymentMethod, int installmentCount, String shipping}) async{
+    try {
+      await _orderRepository.updateCart(paymentMethod, installmentCount, shipping);
+      _updateCart(_cart.copyWith(paymentMethod: paymentMethod, installmentCount: installmentCount, shipping:  shipping));
+    } catch(e) {
+      print('ERROR: $e');
+    }
+  }
+
+  Future<void> confirmCartOrder() async{
+    try {
+      await _orderRepository.confirmCartOrder();
+      searchCart();
+    } catch(e) {
+      print('ERROR: $e');
+    }
+  }
+
   Future<void> updateCartProduct(OrderProduct cartProduct) async{
     try {
       await _orderRepository.updateCartProduct(cartProduct);

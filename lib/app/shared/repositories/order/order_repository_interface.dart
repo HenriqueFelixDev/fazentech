@@ -10,6 +10,8 @@ abstract class IOrderRepository {
   Future<List<Order>> getOrders(OrderFilter filter);
   Future<Order> getOrderById(String id);
   Future<Order> getCart();
+  Future<void> updateCart(String paymentMethod, int installmentCount, String shipping);
+  Future<void> confirmCartOrder();
   Future<void> insertProductOnCart(Product product, int quantity);
   Future<void> updateCartProduct(OrderProduct cartProduct);
   Future<void> deleteCartProduct(Product product);

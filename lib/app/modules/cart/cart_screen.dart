@@ -17,7 +17,7 @@ class CartScreen extends StatefulWidget {
 }
 
 class _CartScreenState extends State<CartScreen> {
-  final controller = CartController(OrderRepositoryAPI());
+  final controller = Modular.get<CartController>();
   final userController = Modular.get<UserStore>();
 
   bool isLoggedIn = true;
@@ -106,19 +106,7 @@ class _CartScreenState extends State<CartScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: CustomAppBarWidget(
-        titleText: 'Carrinho'
-      ),
-      floatingActionButton: isLoggedIn
-        ? FloatingActionButton(
-            child: Icon(Icons.check, size: 28.0, color: Colors.white),
-            onPressed: () => Modular.to.pushNamed('/checkout/methods'),
-          )
-        : null,
-      body: !isLoggedIn
-        ? _unloggedScreen()
-        : StreamBuilder<Order>(
+    return StreamBuilder<Order>(
         stream: controller.cart,
         builder: (context, snapshot) {
           if(snapshot.connectionState == ConnectionState.none || snapshot.connectionState == ConnectionState.waiting) {
@@ -131,85 +119,97 @@ class _CartScreenState extends State<CartScreen> {
 
           final cart = snapshot.data;
 
-          return ListView(
-            padding: const EdgeInsets.all(24.0),
-            children: [
-              _shippingChooser(),
-              ResultDetailsItem(
-                label: 'Total',
-                value: 'R\$ ${cart.total.toStringAsFixed(2)}'
-              ),
-              Container(
-                margin: const EdgeInsets.only(top: 24.0),
-                child: Text('Produtos')
-              ),
-              Column(
-                mainAxisSize: MainAxisSize.min,
-                children: List.generate(
-                  cart.products.length,
-                  (index) {
-                    final product = cart.products[index];
-
-                    return Container(
-                      margin: const EdgeInsets.symmetric(vertical: 8.0),
-                      child: Dismissible(
-                        key: ValueKey(product.product.id),
-                        background: Container(
-                          color: Colors.red,
-                          alignment: Alignment(-0.8, 0), 
-                          child: Icon(Icons.delete, size: 32.0, color: Colors.white54), 
-                        ),
-                        direction: DismissDirection.startToEnd,
-                        confirmDismiss: (direction) {
-                          return showDialog<bool>(
-                            context: context,
-                            builder: (context) {
-                              return AlertDialog(
-                                title: Text('Confirmar Remoção'),
-                                content: Text('Deseja realmente remover "${product.product.name}" do carrinho?'),
-                                actions: [
-                                  FlatButton(
-                                    child: Text('Sim'),
-                                    onPressed: () {
-                                      Navigator.of(context).pop(true);
-                                    }
-                                  ),
-                                  FlatButton(
-                                    child: Text('Cancelar'),
-                                    onPressed: () {
-                                      Navigator.of(context).pop(false);
-                                    }
-                                  ),
-                                ]
-                              );
-                            }
-                          );
-                        },
-                        onDismissed: (direction) {
-                          controller.deleteCartProduct(product);
-                        },
-                        child: CartListTileWidget(
-                          productImage: product.product.images[0],
-                          productTitle: product.product.name,
-                          productPrice: product.product.price,
-                          productsCount: product.quantity,
-                          onProductsCountChange: (value) {
-                            int newQuantity = product.quantity + value;
-                            if(newQuantity < 0) {
-                              newQuantity = 0;
-                            }
-                            controller.updateCartProduct(product.copyWith(quantity: newQuantity));
-                          },
-                        ),
-                      ),
-                    );
-                  }
+          return Scaffold(
+            appBar: CustomAppBarWidget(
+              titleText: 'Carrinho'
+            ),
+            floatingActionButton: isLoggedIn && cart.products.length > 0
+              ? FloatingActionButton(
+                  child: Icon(Icons.check, size: 28.0, color: Colors.white),
+                  onPressed: () => Modular.to.pushNamed('/cart/checkout/methods'),
                 )
-              )
-            ],
+              : null,
+            body:  !isLoggedIn
+              ? _unloggedScreen()
+              : ListView(
+              padding: const EdgeInsets.all(24.0),
+              children: [
+                _shippingChooser(),
+                ResultDetailsItem(
+                  label: 'Total',
+                  value: 'R\$ ${cart.total.toStringAsFixed(2)}'
+                ),
+                Container(
+                  margin: const EdgeInsets.only(top: 24.0),
+                  child: Text('Produtos')
+                ),
+                Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: List.generate(
+                    cart.products.length,
+                    (index) {
+                      final product = cart.products[index];
+
+                      return Container(
+                        margin: const EdgeInsets.symmetric(vertical: 8.0),
+                        child: Dismissible(
+                          key: ValueKey(product.product.id),
+                          background: Container(
+                            color: Colors.red,
+                            alignment: Alignment(-0.8, 0), 
+                            child: Icon(Icons.delete, size: 32.0, color: Colors.white54), 
+                          ),
+                          direction: DismissDirection.startToEnd,
+                          confirmDismiss: (direction) {
+                            return showDialog<bool>(
+                              context: context,
+                              builder: (context) {
+                                return AlertDialog(
+                                  title: Text('Confirmar Remoção'),
+                                  content: Text('Deseja realmente remover "${product.product.name}" do carrinho?'),
+                                  actions: [
+                                    FlatButton(
+                                      child: Text('Sim'),
+                                      onPressed: () {
+                                        Navigator.of(context).pop(true);
+                                      }
+                                    ),
+                                    FlatButton(
+                                      child: Text('Cancelar'),
+                                      onPressed: () {
+                                        Navigator.of(context).pop(false);
+                                      }
+                                    ),
+                                  ]
+                                );
+                              }
+                            );
+                          },
+                          onDismissed: (direction) {
+                            controller.deleteCartProduct(product);
+                          },
+                          child: CartListTileWidget(
+                            productImage: product.product.images[0],
+                            productTitle: product.product.name,
+                            productPrice: product.product.price,
+                            productsCount: product.quantity,
+                            onProductsCountChange: (value) {
+                              int newQuantity = product.quantity + value;
+                              if(newQuantity < 0) {
+                                newQuantity = 0;
+                              }
+                              controller.updateCartProduct(product.copyWith(quantity: newQuantity));
+                            },
+                          ),
+                        ),
+                      );
+                    }
+                  )
+                )
+              ],
+            )
           );
         },
-      )
     );
   }
 }

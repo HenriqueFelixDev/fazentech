@@ -25,12 +25,16 @@ class _LoginScreenState extends State<LoginScreen> {
 
   final _scaffoldKey = GlobalKey<ScaffoldState>();
 
+  void _goToHomePage() {
+    Modular.to.pushReplacementNamed('/main');
+  }
+
   @override
   void initState() {
     super.initState();
     userDisposer = autorun((_) {
       if(userController.user != null) {
-        Modular.to.pushReplacementNamed('/main');
+        _goToHomePage();
       }
     });
 
@@ -131,6 +135,7 @@ class _LoginScreenState extends State<LoginScreen> {
     _showLoadingDialog();
     await loginController.loginWithEmailAndPassword();
     Navigator.of(context).pop();
+    _goToHomePage();
   }
 
   _showLoadingDialog() {

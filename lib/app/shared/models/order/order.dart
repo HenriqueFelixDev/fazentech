@@ -8,6 +8,9 @@ class Order {
   String id;
   DateTime createdIn;
   List<OrderProduct> products;
+  String paymentMethod;
+  int installmentCount;
+  String shipping;
   OrderStatus status;
   double total;
 
@@ -15,6 +18,9 @@ class Order {
     this.id,
     this.products,
     this.createdIn,
+    this.paymentMethod,
+    this.installmentCount,
+    this.shipping,
     String status,
     this.total
   }) : this.status = OrderStatus.valueOf(status);
@@ -23,6 +29,9 @@ class Order {
     String id,
     DateTime createdIn,
     List<OrderProduct> products,
+    String paymentMethod,
+    int installmentCount,
+    String shipping,
     String status,
     double total
   }) {
@@ -30,6 +39,9 @@ class Order {
       id: id ?? this.id,
       createdIn: createdIn ?? this.createdIn,
       products: products ?? this.products,
+      paymentMethod: paymentMethod ?? this.paymentMethod,
+      installmentCount: installmentCount ?? this.installmentCount,
+      shipping: shipping ?? this.shipping,
       status: status ?? this.status.name,
       total: total ?? this.total
     );
@@ -40,6 +52,9 @@ class Order {
       'id': id,
       'created_in': createdIn?.toString(),
       'products': products?.map((x) => x?.toMap())?.toList(),
+      'paymenth_method': paymentMethod,
+      'installmentCount': installmentCount,
+      'shipping': shipping,
       'status': status.name,
       'total': total
     };
@@ -52,6 +67,9 @@ class Order {
       id: map['id'].toString(),
       createdIn: DateTime.tryParse(map['created_in']),
       products: List<OrderProduct>.from(map['products']?.map((x) => OrderProduct.fromMap(x)) ?? []),
+      paymentMethod: map['payment_method'],
+      installmentCount: map['installment_count'],
+      shipping: map['shipping'],
       status: map['status'] ?? '',
       total: map['total'].toDouble()
     );
@@ -67,7 +85,7 @@ class Order {
     );
 
   @override
-  String toString() => 'Order(id: $id, createdIn: $createdIn, products: $products, status: $status, total: $total)';
+  String toString() => 'Order(id: $id, createdIn: $createdIn, products: $products, paymentMethod: $paymentMethod, installmentCount: $installmentCount, shipping: $shipping, status: $status, total: $total)';
 
   @override
   bool operator ==(Object o) {
@@ -77,6 +95,9 @@ class Order {
       o.id == id &&
       o.createdIn == createdIn &&
       listEquals(o.products, products) && 
+      o.paymentMethod == paymentMethod &&
+      o.installmentCount == installmentCount &&
+      o.shipping == shipping &&
       o.status == status &&
       o.total == total;
   }

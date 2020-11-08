@@ -2,7 +2,7 @@ import 'package:fazentech/app/main_screen.dart';
 import 'package:fazentech/app/modules/account/account_module.dart';
 import 'package:fazentech/app/modules/auth/auth_module.dart';
 import 'package:fazentech/app/modules/cart/cart_controller.dart';
-import 'package:fazentech/app/modules/checkout/checkout_module.dart';
+import 'package:fazentech/app/modules/cart/cart_module.dart';
 import 'package:fazentech/app/modules/order/order_module.dart';
 import 'package:fazentech/app/modules/product/submodules/product/product_screen.dart';
 import 'package:fazentech/app/modules/splash/splash_screen.dart';
@@ -44,7 +44,7 @@ class AppModule extends MainModule {
     ModularRouter('/main', child: (_, __) => MainScreen()),
     ModularRouter('/auth', module: AuthModule()),
     ModularRouter('/produtos/:id', child: (_, args) => ProductScreen(product: args.data)),
-    ModularRouter('/checkout', module: CheckoutModule()),
+    ModularRouter('/cart', module: CartModule()),
     ModularRouter('/account', module: AccountModule()),
     ModularRouter('/orders', module: OrderModule())
   ];

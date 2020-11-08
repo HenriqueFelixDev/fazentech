@@ -1,3 +1,7 @@
+import 'dart:async';
+
+import 'package:fazentech/app/modules/cart/cart_controller.dart';
+
 import 'components/payment_method_card.dart';
 import 'package:fazentech/app/shared/components/custom_app_bar_widget.dart';
 import 'package:fazentech/app/shared/theme/text_styles.dart';
@@ -10,9 +14,34 @@ class PaymentMethodScreen extends StatefulWidget {
 }
 
 class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
-  String value = 'cartao_credito';
+  final controller = Modular.get<CartController>();
+  StreamSubscription _cartSubscription;
+  String value;
 
-  _onSelectValue(selectedValue) => setState(() => value = selectedValue);
+  @override
+  void initState() {
+    super.initState();
+    _cartSubscription = controller.cart.listen((cart) {
+      setState(() => value = cart.paymentMethod);
+    });
+  }
+
+  @override
+  void dispose() {
+    _cartSubscription.cancel();
+    super.dispose();
+  }
+
+  _onSelectValue(selectedValue) {
+    controller.updateCart(paymentMethod: selectedValue);
+    setState(() => value = selectedValue);
+  }
+
+  _goToNextPage() {
+    value == 'credit_card'
+      ? Modular.to.pushNamed('/cart/checkout/credit-card')
+      : Modular.to.pushNamed('/cart/checkout/confirmation');
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +51,7 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
       ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.check, size: 24.0, color: Colors.white),
-        onPressed: () => Modular.to.pushNamed('/checkout/credit-card')
+        onPressed: _goToNextPage
       ),
       body: ListView(
         padding: const EdgeInsets.symmetric(horizontal: 24.0),
@@ -30,7 +59,7 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
           PaymentMethodCard(
             text: 'Cartão de Crédito',
             complement: Image.asset('assets/img/bandeiras-cartoes.png'),
-            value: 'cartao_credito',
+            value: 'credit_card',
             groupValue: value,
             onSelect: _onSelectValue,
           ),
@@ -40,7 +69,7 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
               alignment: Alignment.centerRight,
               child: Icon(Icons.short_text)
             ),
-            value: 'boleto_bancario',
+            value: 'bank_slip',
             groupValue: value,
             onSelect: _onSelectValue,
           ),

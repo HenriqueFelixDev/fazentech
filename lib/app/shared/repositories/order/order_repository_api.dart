@@ -81,5 +81,26 @@ class OrderRepositoryAPI implements IOrderRepository {
       body: {'productId': cartProduct.product.id, 'quantity': cartProduct.quantity.toString()}
     );
   }
+  
+  Future<void> updateCart(String paymentMethod, int installmentCount, String shipping) async{
+    final token = await _authRepository.getAuthenticationToken();
+    final map = {'paymentMethod': paymentMethod, 'installmentCount': installmentCount, 'shipping': shipping};
+    await httpClient.put(
+      '/cart', 
+      headers: {'Authorization': 'Bearer $token', 'Content-Type': 'application/json'},
+      body: json.encode(map)
+    );
+  }
+
+  Future<void> confirmCartOrder() async{
+    final token = await _authRepository.getAuthenticationToken();
+    print('PASSOU 1');
+    await httpClient.post(
+      '/cart/confirm', 
+      headers: {'Authorization': 'Bearer $token'},
+      onError: (code, body) => print(body)
+    );
+    print('PASSOU 2');
+  }
 
 }

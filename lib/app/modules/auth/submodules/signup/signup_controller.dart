@@ -101,33 +101,7 @@ class SignupController {
         )
       );
 
-      final userTest = UserModel(
-        name: 'Henrique',
-        email: 'henrique@mail.com',
-        cpf: '13589941618',
-        rg: '123456789',
-        password: 'abcd1234',
-        phone: Phone(
-          areaCode: '31',
-          number: '37531449' 
-        ),
-        cellphone: Phone(
-          areaCode: '31',
-          number: '983489321' 
-        ),
-        birthday: DateTime(1999, 04, 13),
-        address: Address(
-          street: 'Rua X',
-          number: '40',
-          city: 'Rio Espera',
-          state: AddressState.mg,
-          postalCode: '36460000',
-          neighborhood: 'Centro',
-          complement: '',
-        )
-      );
-
-      await _userController.signUpWithEmailAndPassword(userTest);
+      await _userController.signUpWithEmailAndPassword(user);
     } on InvalidParametersException catch(e) {
       error = 'Alguns campos estão com valores inválidos';
       nameError = _getFieldMessage(e, 'name');
