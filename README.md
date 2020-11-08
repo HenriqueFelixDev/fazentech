@@ -5,7 +5,33 @@ Aplicativo de e-commerce para o portifolio do curso de Análise e Desenvolviment
 ![Telas do aplicativo](https://cdn.dribbble.com/users/5683019/screenshots/14342182/media/61f08279a4ae13b17537a6ab2f03041b.jpg)
 
 ## Getting Started
-- [Estudo de Caso](#estudo-de-caso)
+- [FazenTech](#fazentech)
+  - [Getting Started](#getting-started)
+  - [Test](#test)
+  - [Telas](#telas)
+  - [Estudo de Caso](#estudo-de-caso)
+
+## Test
+
+## Telas
+<p float="left">
+  <img src="https://user-images.githubusercontent.com/47118693/98455738-85756e80-2153-11eb-87ee-23d658018683.jpeg" width="100" />
+  <img src="https://user-images.githubusercontent.com/47118693/98455752-89a18c00-2153-11eb-8a4e-3530cce81804.jpeg" width="100" />
+  <img src="https://user-images.githubusercontent.com/47118693/98455734-83abab00-2153-11eb-9f02-64e81c6081ab.jpeg" width="100" />
+  <img src="https://user-images.githubusercontent.com/47118693/98455735-84dcd800-2153-11eb-8ea6-8739cb2ba162.jpeg" width="100" /> 
+  <img src="https://user-images.githubusercontent.com/47118693/98455737-84dcd800-2153-11eb-8d39-33c1af88a436.jpeg" width="100" />
+  <img src="https://user-images.githubusercontent.com/47118693/98455739-85756e80-2153-11eb-968d-1378126360eb.jpeg" width="100" />
+  <img src="https://user-images.githubusercontent.com/47118693/98455740-860e0500-2153-11eb-9d9e-f88e89255c09.jpeg" width="100" />
+  <img src="https://user-images.githubusercontent.com/47118693/98455741-860e0500-2153-11eb-974a-8f340b1d2d64.jpeg" width="100" />
+  <img src="https://user-images.githubusercontent.com/47118693/98455742-86a69b80-2153-11eb-9eae-d26041da7f2f.jpeg" width="100" />
+  <img src="https://user-images.githubusercontent.com/47118693/98455743-86a69b80-2153-11eb-987f-5db04b8fcfc1.jpeg" width="100" />
+  <img src="https://user-images.githubusercontent.com/47118693/98455750-8908f580-2153-11eb-8333-7bede099e921.jpeg" width="100" />
+  <img src="https://user-images.githubusercontent.com/47118693/98455751-89a18c00-2153-11eb-9895-fce4fcba7b07.jpeg" width="100" />
+  <img src="https://user-images.githubusercontent.com/47118693/98455754-89a18c00-2153-11eb-8802-e34ab876c5e9.jpeg" width="100" />
+  <img src="https://user-images.githubusercontent.com/47118693/98455755-8a3a2280-2153-11eb-9d3a-e2d91b17431f.jpeg" width="100" />
+  <img src="https://user-images.githubusercontent.com/47118693/98455756-8a3a2280-2153-11eb-8ae2-8df038e4bf49.jpeg" width="100" />
+  <img src="https://user-images.githubusercontent.com/47118693/98455757-8ad2b900-2153-11eb-92a5-be15ed3a0c54.jpeg" width="100" />
+</p>
 
 ## Estudo de Caso
 
