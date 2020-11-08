@@ -1,6 +1,7 @@
 import 'package:fazentech/app/shared/components/gradient_card_widget.dart';
 import 'package:fazentech/app/shared/models/order/order.dart';
 import 'package:fazentech/app/shared/theme/colors.dart';
+import 'package:fazentech/app/shared/util/date_format_util.dart';
 import 'package:flutter/material.dart';
 
 class OrderCardWidget extends StatelessWidget {
@@ -30,7 +31,7 @@ class OrderCardWidget extends StatelessWidget {
               SizedBox(width: 8.0),
               Icon(Icons.date_range, color: Colors.black54),
               Expanded(
-                child: Text(order.createdIn.toString(), style: textTheme.headline5.copyWith(color: Colors.black54))
+                child: Text(DateFormatUtil.formatDate(order.createdIn), style: textTheme.headline5.copyWith(color: Colors.black54))
               ),
               Expanded(
                 child: Text(

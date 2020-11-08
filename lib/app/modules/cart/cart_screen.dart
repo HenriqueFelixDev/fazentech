@@ -3,6 +3,7 @@ import 'package:fazentech/app/shared/controllers/user_store.dart';
 import 'package:fazentech/app/shared/models/order/order.dart';
 import 'package:fazentech/app/shared/models/order/shipping.dart';
 import 'package:fazentech/app/shared/repositories/order/order_repository_api.dart';
+import 'package:fazentech/app/shared/util/date_format_util.dart';
 import 'package:flutter/material.dart';
 import 'package:fazentech/app/modules/cart/components/cart_list_tile_widget.dart';
 import 'package:fazentech/app/shared/components/custom_app_bar_widget.dart';
@@ -68,7 +69,7 @@ class _CartScreenState extends State<CartScreen> {
                     children: shippings.map(
                       (shipping) => RadioListTile<Shipping>(
                         title: Text('${shipping.type} (R\$ ${shipping.value})'),
-                        subtitle: Text('Data de chegada: ${shipping.arrivalForecast} ${shipping.arrivalForecast.difference(DateTime.now()).inDays} dia(s)'),
+                        subtitle: Text('Data de chegada: ${DateFormatUtil.formatDate(shipping.arrivalForecast)} ${shipping.arrivalForecast.difference(DateTime.now()).inDays} dia(s)'),
                         value: shipping, 
                         groupValue: selectedShipping,
                         dense: true,
